@@ -1,11 +1,4 @@
-class MovableObject {
-    x = 120;
-    y = 290;
-    img;
-    height = 150;
-    width = 100;
-    imageCache = {};
-    currentImage = 0;
+class MovableObject extends DrawableObject{
     speed = 0.09;
     otherDirection = false;
     speedY = 0;
@@ -26,26 +19,6 @@ class MovableObject {
         return this.y < 126;
     }
 
-    // loadImage('img/test.png)
-    loadImage(path) {
-        this.img = new Image(); // this.img = document.getElementById('image') <img id="image"src="">
-        this.img.src = path;
-    }
-
-    draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    }
-
-    drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Chicken) {
-            ctx.beginPath();
-            ctx.lineWidth = '5';
-            ctx.strokeStyle = 'blue';
-            ctx.rect(this.x, this.y, this.width, this.height);
-            ctx.stroke();
-        }
-    }
-
     // character.IsColliding(chicken):
     isColliding(mo) {
         return this.x + this.width > mo.x &&
@@ -55,7 +28,7 @@ class MovableObject {
     }
 
     hit(){
-        this.health -= 10;
+        this.health -= 20;
         if(this.health < 0) {
             this.health = 0;
         } else {
@@ -73,17 +46,6 @@ class MovableObject {
         return this.health == 0;
     }
 
-    /**
-     * 
-     * @param {Array} arr ['img/image1.png', 'img/image2.png', ...] 
-     */
-    loadImages(arr) {
-        arr.forEach((path) => {
-            let img = new Image();
-            img.src = path;
-            this.imageCache[path] = img;
-        });
-    }
 
     moveRight() {
         console.log('Moving right')
@@ -95,6 +57,10 @@ class MovableObject {
         }, 1000 / 60)
     }
 
+    jump() {
+        this.speedY = 30;
+    }
+
     playAnimation(images) {
         let i = this.currentImage % images.length; // let i = 0 % 6; => 1, Rest 1
         // i = 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0
@@ -102,4 +68,5 @@ class MovableObject {
         this.img = this.imageCache[path];
         this.currentImage++;
     }
+
 }

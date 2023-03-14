@@ -1,8 +1,8 @@
 class Character extends MovableObject {
 
-    width = 150;
-    height = 300;
-    y = -100; // 135
+    width = 110;
+    height = 220;
+    y = -50; // 135
     speed = 5;
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
