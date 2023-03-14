@@ -30,6 +30,18 @@ window.addEventListener('keydown', (event) => {
     if(event.keyCode == 32 || event.key == ' ') {
         keyboard.SPACE = true;
     }
+
+    if(event.keyCode == 70) {
+        keyboard.F = true;
+    }
+
+    if(event.keyCode == 69) {
+        keyboard.E = true;
+    }
+
+    if(event.keyCode == 13) {
+        keyboard.ENTER = true;
+    }
 })
 
 window.addEventListener('keyup', (event) => {
@@ -51,5 +63,17 @@ window.addEventListener('keyup', (event) => {
 
     if(event.keyCode == 32 || event.key == ' ') {
         keyboard.SPACE = false;
+    }
+
+    if(event.keyCode == 70) {
+        keyboard.F = false;
+    }
+
+    if(event.keyCode == 69) {
+        keyboard.E = false;
+    }
+
+    if(event.keyCode == 13) {
+        keyboard.ENTER = false;
     }
 })
