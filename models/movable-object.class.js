@@ -53,6 +53,17 @@ class MovableObject {
             this.y < mo.y + mo.height;
     }
 
+    hit(){
+        this.health -= 10;
+        if(this.health < 0) {
+            this.health = 0;
+        }
+    }
+
+    isDead(){
+        return this.health == 0;
+    }
+
     /**
      * 
      * @param {Array} arr ['img/image1.png', 'img/image2.png', ...] 
