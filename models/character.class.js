@@ -15,7 +15,6 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/idle/I-8.png',
         'img/2_character_pepe/1_idle/idle/I-9.png',
         'img/2_character_pepe/1_idle/idle/I-10.png'
-
     ];
 
     IMAGES_WALKING = [
@@ -109,26 +108,47 @@ class Character extends MovableObject {
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
+        let currentAnimation = null;
+        let currentTimeout = null;
 
-
-
-        setInterval(() => {
-            if(this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-            } else if(this.isHurt()){
-                this.playAnimation(this.IMAGES_HURT);
+        const updateAnimation = () => {
+            let newAnimation = null;
+            let newTimeout = null;
+        
+            if (this.isDead()) {
+                newAnimation = this.IMAGES_DEAD;
+                newTimeout = 100;
+            } else if (this.isHurt()) {
+                newAnimation = this.IMAGES_HURT;
+                newTimeout = 100;
             } else if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);
+                this.walking_sound.pause();
+                newAnimation = this.IMAGES_JUMPING;
+                newTimeout = 100;
+            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                this.walking_sound.play();
+                newAnimation = this.IMAGES_WALKING;
+                newTimeout = 70;
             } else {
-
-                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                    //Walk animation
-                    this.playAnimation(this.IMAGES_WALKING);
-                } else{
-                    this.playAnimation(this.IMAGES_STANDING);
-                }
+                newAnimation = this.IMAGES_STANDING;
+                newTimeout = 150;
             }
-        }, 55);
+        
+            if (newAnimation !== currentAnimation) {
+                currentAnimation = newAnimation;
+                if (currentTimeout) {
+                    clearTimeout(currentTimeout);
+                }
+                const playCurrentAnimation = () => {
+                    this.playAnimation(currentAnimation);
+                    currentTimeout = setTimeout(playCurrentAnimation, newTimeout);
+                };
+                playCurrentAnimation();
+            }
+        };
+        
+        const animationInterval = setInterval(updateAnimation, 55);
+        
     }
 
     jump() {
