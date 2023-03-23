@@ -1,25 +1,33 @@
-class MovableObject extends DrawableObject{
+class MovableObject extends DrawableObject {
     speed = 0.09;
     otherDirection = false;
     speedY = 0;
     acceleration = 3;
     health = 100;
     lastHit = 0;
+    maxHeight = 10;
+
 
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
+
+                // Überprüfen, ob die maximale Höhe erreicht wurde
+                if (this.y < this.maxHeight) {
+                    this.speedY = 0;
+                    this.y = this.maxHeight;
+                }
             }
-        }, 1000 / 25);
+        }, 40);
     }
 
     isAboveGround() {
-        if(this instanceof ThrowableObject) { // Throwable objects should always fall
+        if (this instanceof ThrowableObject) { // Throwable objects should always fall
             return true
         } else {
-        }return this.y < 185;
+        } return this.y < 185;
     }
 
     // character.IsColliding(chicken):
@@ -30,22 +38,22 @@ class MovableObject extends DrawableObject{
             this.y < mo.y + mo.height;
     }
 
-    hit(){
+    hit() {
         this.health -= 20;
-        if(this.health < 0) {
+        if (this.health < 0) {
             this.health = 0;
         } else {
             this.lastHit = new Date().getTime(); // Difference in ms
         }
     }
 
-    isHurt(){
+    isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000; //Difference in s
         return timepassed < 0.7;
     }
 
-    isDead(){
+    isDead() {
         return this.health == 0;
     }
 
