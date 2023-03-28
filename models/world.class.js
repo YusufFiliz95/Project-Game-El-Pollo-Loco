@@ -7,7 +7,7 @@ class World {
     keyboard;
     camera_x = 0;
     statusBar = new StatusBar();
-    throwableOBjects = [];
+    throwableObjects = [];
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -15,27 +15,41 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.run();
+        this.run(); 
     }
 
     setWorld() {
         this.character.world = this;
     }
 
-    run(){
+    run() {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowableObjects();
-        }, 200);
+        }, 10);
     }
 
 
-    checkThrowableObjects(){
-        if(this.keyboard.E || this.keyboard.F || this.keyboard.ENTER) {
+    checkThrowableObjects() {
+        if (this.keyboard.E && this.keyboard.keyReleased.E) {
+            this.keyboard.keyReleased.E = false;
             let bottle = new ThrowableObject(this.character.x + 60, this.character.y + 40);
-            this.throwableOBjects.push(bottle);
+            this.throwableObjects.push(bottle);
+        }
+        if (this.keyboard.F && this.keyboard.keyReleased.F) {
+            this.keyboard.keyReleased.F = false;
+            let bottle = new ThrowableObject(this.character.x + 60, this.character.y + 40);
+            this.throwableObjects.push(bottle);
+        }
+        if (this.keyboard.ENTER && this.keyboard.keyReleased.ENTER) {
+            this.keyboard.keyReleased.ENTER = false;
+            let bottle = new ThrowableObject(this.character.x + 60, this.character.y + 40);
+            this.throwableObjects.push(bottle);
         }
     }
+
+
+    
 
     checkCollisions(){
         this.level.enemies.forEach((enemy) => {
@@ -60,7 +74,7 @@ class World {
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.throwableOBjects);
+        this.addObjectsToMap(this.throwableObjects);
 
         this.ctx.translate(-this.camera_x, 0);
 
