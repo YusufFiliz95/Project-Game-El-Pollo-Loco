@@ -26,7 +26,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/2_walk/W-24.png',
         'img/2_character_pepe/2_walk/W-25.png',
         'img/2_character_pepe/2_walk/W-26.png'
-    ];
+    ];5
 
     IMAGES_JUMPING = [
         'img/2_character_pepe/3_jump/J-31.png',
@@ -90,7 +90,7 @@ class Character extends MovableObject {
                     isWalking = true;
                 }
             }
-            if (this.world.keyboard.LEFT && this.x > -600) {
+            if (this.world.keyboard.LEFT && this.x > -1200) {
                 this.x -= this.speed;
                 this.otherDirection = true;
                 this.walking_sound.playbackRate = 2;
@@ -163,5 +163,5 @@ class Character extends MovableObject {
         }
     }
 
-    hitbox = new Hitbox(20, 10);
+    hitbox = new Hitbox(85, 25, 10, 20);
 }

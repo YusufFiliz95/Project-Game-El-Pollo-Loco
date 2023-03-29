@@ -17,7 +17,7 @@ class Endboss extends MovableObject {
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
-        this.x = 2500;
+        this.x = 4600;
         this.animate();
     }
 
@@ -26,4 +26,6 @@ class Endboss extends MovableObject {
             this.playAnimation(this.IMAGES_WALKING)
         }, 200);
     }
+
+    hitbox = new Hitbox(80, 40, 10, 30);
 }

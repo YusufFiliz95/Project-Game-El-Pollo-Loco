@@ -30,11 +30,14 @@ class MovableObject extends DrawableObject {
         } return this.y < 185;
     }
 
-    // character.IsColliding(chicken):
     isColliding(mo) {
         if (this.hitbox && mo.hitbox) {
-            return this.hitbox.isColliding(this.x, this.y, this.width, this.height,
-                mo.x, mo.y, mo.width, mo.height);
+            return this.hitbox.isColliding(
+                this.x, this.y, this.width, this.height,
+                mo.x, mo.y, mo.width, mo.height,
+                this.hitbox.marginTop, this.hitbox.marginRight, this.hitbox.marginBottom, this.hitbox.marginLeft,
+                mo.hitbox.marginTop, mo.hitbox.marginRight, mo.hitbox.marginBottom, mo.hitbox.marginLeft
+            );
         } else {
             // Verwenden Sie die Standardkollisionsprüfung, wenn keine Hitbox vorhanden ist
             return this.x + this.width > mo.x &&
@@ -43,6 +46,7 @@ class MovableObject extends DrawableObject {
                 this.y < mo.y + mo.height;
         }
     }
+    
 
     hit() {
         this.health -= 20;
