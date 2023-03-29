@@ -162,4 +162,6 @@ class Character extends MovableObject {
             this.speedY = 40;
         }
     }
+
+    hitbox = new Hitbox(20, 10);
 }

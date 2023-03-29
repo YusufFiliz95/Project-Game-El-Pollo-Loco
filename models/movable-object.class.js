@@ -32,10 +32,16 @@ class MovableObject extends DrawableObject {
 
     // character.IsColliding(chicken):
     isColliding(mo) {
-        return this.x + this.width > mo.x &&
-            this.y + this.height > mo.y &&
-            this.x < mo.x &&
-            this.y < mo.y + mo.height;
+        if (this.hitbox && mo.hitbox) {
+            return this.hitbox.isColliding(this.x, this.y, this.width, this.height,
+                mo.x, mo.y, mo.width, mo.height);
+        } else {
+            // Verwenden Sie die Standardkollisionsprüfung, wenn keine Hitbox vorhanden ist
+            return this.x + this.width > mo.x &&
+                this.y + this.height > mo.y &&
+                this.x < mo.x + mo.width &&
+                this.y < mo.y + mo.height;
+        }
     }
 
     hit() {
