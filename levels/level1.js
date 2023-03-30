@@ -1,7 +1,7 @@
 const level1 = new Level(
 
     [
-        new Chicken(),
+/*         new Chicken(),
         new Chicken(),
         new Chicken(),
         new Chicken(),
@@ -18,28 +18,18 @@ const level1 = new Level(
         new Smallchicken(),
         new Smallchicken(),
         new Smallchicken(),
-        new Smallchicken(),
-        ...createRandomCoinPattern(),
-        ...createRandomCoinPattern(),
-        ...createRandomCoinPattern(),
-        ...createRandomCoinPattern(),
-        ...createRandomCoinPattern(),
-        ...createRandomCoinPattern(),
-        ...createRandomCoinPattern(),
-        ...createRandomCoinPattern(),
-        ...createRandomCoinPattern(),
-        ...createRandomCoinPattern(),
-        ...createRandomBottlePattern(),
-        ...createRandomBottlePattern(),
-        ...createRandomBottlePattern(),
-        ...createRandomBottlePattern(),
-        ...createRandomBottlePattern(),
-        ...createRandomBottlePattern(),
-        ...createRandomBottlePattern(),
-        ...createRandomBottlePattern(),
-        ...createRandomBottlePattern(),
-        ...createRandomBottlePattern(),
-        ...createRandomBottlePattern(),
+        new Smallchicken(), */
+        ...createAlternatingPattern(),
+        ...createAlternatingPattern(),
+        ...createAlternatingPattern(),
+        ...createAlternatingPattern(),
+        ...createAlternatingPattern(),
+        ...createAlternatingPattern(),
+        ...createAlternatingPattern(),
+        ...createAlternatingPattern(),
+        ...createAlternatingPattern(),
+        ...createAlternatingPattern(),
+
         new Endboss(),
     ],
     [
@@ -110,3 +100,4 @@ const level1 = new Level(
         new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 719 * 6),
     ],
 );
+
