@@ -129,15 +129,6 @@ const coinPatterns = [
         new Coin(x + 100, y),
         new Coin(x + 100, y - 100),
     ],
-    // Pattern 8: Coin Checkerboard
-    (x, y) => [
-        new Coin(x, y),
-        new Coin(x + 100, y - 100),
-        new Coin(x + 200, y),
-        new Coin(x + 300, y - 100),
-        new Coin(x + 400, y),
-        new Coin(x + 500, y - 100),
-    ],
 ];
 const bottlePatterns = [
     // Pattern 1: Single bottle on the ground
@@ -177,8 +168,8 @@ let lastRandomIndexCoin = null;
 let lastRandomIndexBottle = null;
 let lastXCoordinateCoin = 0;
 let lastXCoordinateBottle = 0;
-const minDistanceBetweenCoinPatterns = 400;
-const minDistanceBetweenBottlePatterns = 400;
+const minDistanceBetweenCoinPatterns = 200;
+const minDistanceBetweenBottlePatterns = 200;
 const maxCoinRange = 3600;
 const maxBottleRange = 3600;
 
@@ -194,7 +185,7 @@ function createAlternatingPattern() {
     lastXCoordinateCoin = coinPattern.newLastXCoordinate;
 
     // Update lastXCoordinateBottle based on the last coin pattern
-    lastXCoordinateBottle = lastXCoordinateCoin + 300;
+    lastXCoordinateBottle = lastXCoordinateCoin + minDistanceBetweenBottlePatterns;
 
     // Create bottle pattern
     const bottlePattern = createRandomPattern(
@@ -204,5 +195,9 @@ function createAlternatingPattern() {
     lastRandomIndexBottle = bottlePattern.newLastRandomIndex;
     lastXCoordinateBottle = bottlePattern.newLastXCoordinate;
 
+    // Update lastXCoordinateCoin based on the last bottle pattern
+    lastXCoordinateCoin = lastXCoordinateBottle + minDistanceBetweenCoinPatterns;
+
     return items;
 }
+
