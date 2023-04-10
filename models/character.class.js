@@ -1,5 +1,6 @@
 class Character extends MovableObject {
 
+    type = 'chicken'
     width = 110;
     height = 220;
     y = -50; // 135
@@ -26,7 +27,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/2_walk/W-24.png',
         'img/2_character_pepe/2_walk/W-25.png',
         'img/2_character_pepe/2_walk/W-26.png'
-    ];5
+    ]; 5
 
     IMAGES_JUMPING = [
         'img/2_character_pepe/3_jump/J-31.png',
@@ -70,8 +71,20 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_HURT);
         this.applyGravity();
         this.animate();
-
     }
+
+    handleCollision(item) {
+        if (this.hitTest(item)) {
+            if (item.type === 'coin') {
+                this.collectedCoins++;
+                item.remove(); // Remove the coin from the game world
+            } else if (item.type === 'bottle') {
+                this.collectedBottles++;
+                item.remove(); // Remove the bottle from the game world
+            }
+        }
+    }
+
 
     animate() {
 
@@ -104,14 +117,20 @@ class Character extends MovableObject {
                 isWalking = false;
             }
 
-            if(this.world.keyboard.UP || this.world.keyboard.SPACE) {
-                if(!this.isJumping) {
+            if (this.world.keyboard.UP || this.world.keyboard.SPACE) {
+                if (!this.isJumping) {
                     this.isJumping = true;
                     this.jump();
                 }
             } else {
                 this.isJumping = false;
-            }             this.world.camera_x = -this.x + 100;
+            } this.world.camera_x = -this.x + 100;
+            this.world.camera_x = -this.x + 100;
+
+            // Check for collisions with all items in the game world
+            for (let item of this.world.items) {
+                this.handleCollision(item);
+            }
         }, 1000 / 60);
 
         let currentAnimation = null;
@@ -120,7 +139,7 @@ class Character extends MovableObject {
         const updateAnimation = () => {
             let newAnimation = null;
             let newTimeout = null;
-        
+
             if (this.isDead()) {
                 newAnimation = this.IMAGES_DEAD;
                 newTimeout = 100;
@@ -139,7 +158,7 @@ class Character extends MovableObject {
                 newAnimation = this.IMAGES_STANDING;
                 newTimeout = 150;
             }
-        
+
             if (newAnimation !== currentAnimation) {
                 currentAnimation = newAnimation;
                 if (currentTimeout) {
@@ -152,13 +171,13 @@ class Character extends MovableObject {
                 playCurrentAnimation();
             }
         };
-        
+
         const animationInterval = setInterval(updateAnimation, 55);
-        
+
     }
 
     jump() {
-        if(!this.isAboveGround()) {
+        if (!this.isAboveGround()) {
             this.speedY = 40;
         }
     }

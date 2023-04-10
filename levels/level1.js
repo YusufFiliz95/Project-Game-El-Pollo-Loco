@@ -1,7 +1,7 @@
 const level1 = new Level(
 
     [
-        new Chicken(),
+/*         new Chicken(),
         new Chicken(),
         new Chicken(),
         new Chicken(),
@@ -18,7 +18,7 @@ const level1 = new Level(
         new Smallchicken(),
         new Smallchicken(),
         new Smallchicken(),
-        new Smallchicken(),
+        new Smallchicken(), */
         ...createAlternatingPattern(),
         ...createAlternatingPattern(),
         ...createAlternatingPattern(),

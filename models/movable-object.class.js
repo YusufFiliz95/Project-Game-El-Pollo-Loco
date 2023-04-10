@@ -7,6 +7,9 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
     maxHeight = 10;
 
+    remove() {
+        this.world.items = this.world.items.filter(item => item !== this);
+    }
 
     applyGravity() {
         setInterval(() => {
@@ -39,7 +42,6 @@ class MovableObject extends DrawableObject {
                 mo.hitbox.marginTop, mo.hitbox.marginRight, mo.hitbox.marginBottom, mo.hitbox.marginLeft
             );
         } else {
-            // Verwenden Sie die Standardkollisionsprüfung, wenn keine Hitbox vorhanden ist
             return this.x + this.width > mo.x &&
                 this.y + this.height > mo.y &&
                 this.x < mo.x + mo.width &&

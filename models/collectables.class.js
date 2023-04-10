@@ -1,4 +1,6 @@
 class Coin extends MovableObject {
+    
+    type = 'coin'
     y = 300;
     width = 100;
     height = 100;
@@ -26,6 +28,8 @@ class Coin extends MovableObject {
 }
 
 class Bottle extends MovableObject {
+
+    type = 'bottle'
     y = 340;
     width = 70;
     height = 90;

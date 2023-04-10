@@ -1,4 +1,6 @@
 class Smallchicken extends MovableObject {
+
+    type = 'smallchicken'
     y = 370;
     width = 50;
     height = 50;
