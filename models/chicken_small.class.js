@@ -1,5 +1,5 @@
 class Smallchicken extends MovableObject {
-
+    isDead = false;
     type = 'smallchicken'
     y = 370;
     width = 50;
@@ -10,8 +10,12 @@ class Smallchicken extends MovableObject {
         'img/3_enemies_chicken/chicken_small/1_walk/3_w.png',
     ];
 
+    IMAGES_DEAD = [
+        'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
+    ];
+
     constructor() {
-        super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png',);
+        super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);
 
         this.x = Smallchicken.generateXPosition();
@@ -41,7 +45,9 @@ class Smallchicken extends MovableObject {
         this.moveLeft();
 
         setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING)
+            if (!this.isDead) {
+                this.playAnimation(this.IMAGES_WALKING);
+            }
         }, 100);
     }
 

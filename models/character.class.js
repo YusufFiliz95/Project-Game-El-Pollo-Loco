@@ -126,11 +126,6 @@ class Character extends MovableObject {
                 this.isJumping = false;
             } this.world.camera_x = -this.x + 100;
             this.world.camera_x = -this.x + 100;
-
-            // Check for collisions with all items in the game world
-            for (let item of this.world.items) {
-                this.handleCollision(item);
-            }
         }, 1000 / 60);
 
         let currentAnimation = null;
@@ -171,9 +166,7 @@ class Character extends MovableObject {
                 playCurrentAnimation();
             }
         };
-
         const animationInterval = setInterval(updateAnimation, 55);
-
     }
 
     jump() {

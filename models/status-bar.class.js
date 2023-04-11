@@ -72,10 +72,14 @@ class StatusBarBottle extends DrawableObject {
         ctx.fillStyle = 'black';
         ctx.fillText(this.count, this.x + this.width - 15, this.y + 43);
     }
+
+    decrementCount() {
+        this.count--;
+    }    
 }
 
 class StatusBarCoin extends DrawableObject {
-    IMAGE_BOTTLE = [
+    IMAGE_COIN = [
         'img/8_coin/coin_1.png'
     ];
 
@@ -84,8 +88,8 @@ class StatusBarCoin extends DrawableObject {
 
     constructor(id) {
         super();
-        this.loadImage(this.IMAGE_BOTTLE);
-        this.x = 330;
+        this.loadImage(this.IMAGE_COIN);
+        this.x = 315;
         this.y = -8;
         this.width = 120;
         this.height = 120;
