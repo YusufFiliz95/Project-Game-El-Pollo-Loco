@@ -63,6 +63,8 @@ class World {
     If the character collides with a bottle, increments the bottle count and removes the bottle.
     */
     checkCollisions() {
+        this.checkThrowableObjectCollisions();
+    
         for (let index = this.level.enemies.length - 1; index >= 0; index--) {
             const enemy = this.level.enemies[index];
             if (this.character.isColliding(enemy)) {
@@ -79,6 +81,48 @@ class World {
         }
     }
 
+/**
+ * This function checks for collisions between throwable objects and enemies in a game and removes the
+ * throwable object and sets the enemy to dead if a collision occurs.
+ */
+checkThrowableObjectCollisions() {
+    for (let i = this.throwableObjects.length - 1; i >= 0; i--) {
+        const throwableObject = this.throwableObjects[i];
+
+        for (let j = this.level.enemies.length - 1; j >= 0; j--) {
+            const enemy = this.level.enemies[j];
+            if (throwableObject.isColliding(enemy) && (enemy.type === 'chicken' || enemy.type === 'smallchicken')) {
+                // Set the throwable object to broken
+                throwableObject.isBroken = true;
+                throwableObject.loadImages(throwableObject.IMAGES_BOTTLE_BREAKING);
+
+                // Set the enemy to dead and display dead images
+                enemy.isDead = true;
+                enemy.loadImage(enemy.IMAGES_DEAD[0]);
+
+                if (enemy.type === 'chicken') {
+                    enemy.y = 351;
+                    setTimeout(() => {
+                        const enemyIndex = this.level.enemies.indexOf(enemy);
+                        if (enemyIndex > -1) {
+                            this.level.enemies.splice(enemyIndex, 1);
+                        }
+                    }, 500);
+                } else if (enemy.type === 'smallchicken') {
+                    enemy.y = 375;
+                    setTimeout(() => {
+                        const enemyIndex = this.level.enemies.indexOf(enemy);
+                        if (enemyIndex > -1) {
+                            this.level.enemies.splice(enemyIndex, 1);
+                        }
+                    }, 500);
+                }
+                break;
+            }
+        }
+    }
+}
+
     /**
     Checks if the character collides with a chicken and if it is below it, kills the chicken.
     Otherwise, hits the character and updates the status bar.
@@ -90,6 +134,7 @@ class World {
             enemy.isDead = true;
             enemy.loadImage(enemy.IMAGES_DEAD);
             enemy.y = 351;
+            this.character.bounceOnCollision(enemy);
             setTimeout(() => {
                 const enemyIndex = this.level.enemies.indexOf(enemy);
                 if (enemyIndex > -1) {
@@ -108,11 +153,12 @@ class World {
     @param {Object} enemy - The smallchicken to check collision with.
     */
     checkSmallChickenCollision(enemy) {
-        if (this.character.y + this.character.height <= enemy.y + enemy.height + 3) {
+        if (this.character.y + this.character.height <= enemy.y + enemy.height + 6) {
             console.log('Smallchicken');
             enemy.isDead = true;
             enemy.loadImage(enemy.IMAGES_DEAD);
             enemy.y = 375;
+            this.character.bounceOnCollision(enemy);
             setTimeout(() => {
                 const enemyIndex = this.level.enemies.indexOf(enemy);
                 if (enemyIndex > -1) {

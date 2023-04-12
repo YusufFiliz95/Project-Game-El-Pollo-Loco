@@ -50,5 +50,5 @@ class Chicken extends MovableObject {
         }, 200);
     }
 
-    hitbox = new Hitbox(1, 1, 1, 1);
+    hitbox = new Hitbox(15, 1, 1, 1);
 }

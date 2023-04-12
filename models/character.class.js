@@ -175,5 +175,11 @@ class Character extends MovableObject {
         }
     }
 
+    bounceOnCollision(enemy) {
+        this.y = enemy.y - this.height;
+        this.speedY = 40;
+    }
+    
+
     hitbox = new Hitbox(85, 25, 10, 20);
 }

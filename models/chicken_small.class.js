@@ -51,5 +51,5 @@ class Smallchicken extends MovableObject {
         }, 100);
     }
 
-    hitbox = new Hitbox(1, 1, 1, 1);
+    hitbox = new Hitbox(12, 1, 1, 1);
 }
