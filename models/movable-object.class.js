@@ -17,7 +17,7 @@ class MovableObject extends DrawableObject {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
 
-                // Überprüfen, ob die maximale Höhe erreicht wurde
+                // Check if the maximum height has been reached
                 if (this.y < this.maxHeight) {
                     this.speedY = 0;
                     this.y = this.maxHeight;

@@ -290,8 +290,6 @@ Otherwise, hits the character and updates the status bar.
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
 
-        //--------- Spcae for fixed objects ---------
-
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
@@ -305,7 +303,7 @@ Otherwise, hits the character and updates the status bar.
 
         this.ctx.translate(-this.camera_x, 0);
 
-        // Draw wird immer wieder aufgerufen
+
         let self = this;
         requestAnimationFrame(function () {
             self.draw();

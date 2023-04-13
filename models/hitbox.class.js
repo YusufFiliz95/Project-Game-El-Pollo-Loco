@@ -22,4 +22,4 @@ class Hitbox {
     }
 }
 
-// Beispiel: hitbox = new Hitbox(marginTop, marginRight, marginBottom, marginLeft);
+// Example: hitbox = new Hitbox(marginTop, marginRight, marginBottom, marginLeft);

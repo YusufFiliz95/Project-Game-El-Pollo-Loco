@@ -77,10 +77,10 @@ class Character extends MovableObject {
         if (this.hitTest(item)) {
             if (item.type === 'coin') {
                 this.collectedCoins++;
-                item.remove(); // Remove the coin from the game world
+                item.remove(); 
             } else if (item.type === 'bottle') {
                 this.collectedBottles++;
-                item.remove(); // Remove the bottle from the game world
+                item.remove(); 
             }
         }
     }
