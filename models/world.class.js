@@ -64,7 +64,7 @@ class World {
     */
     checkCollisions() {
         this.checkThrowableObjectCollisions();
-    
+
         for (let index = this.level.enemies.length - 1; index >= 0; index--) {
             const enemy = this.level.enemies[index];
             if (this.character.isColliding(enemy)) {
@@ -72,6 +72,8 @@ class World {
                     this.checkChickenCollision(enemy);
                 } else if (enemy.type === 'smallchicken') {
                     this.checkSmallChickenCollision(enemy);
+                } else if (enemy.type === 'endboss') {
+                    this.checkEndbossCollision(index);
                 } else if (enemy.type === 'coin') {
                     this.checkCoinCollision(index);
                 } else if (enemy.type === 'bottle') {
@@ -81,47 +83,112 @@ class World {
         }
     }
 
-/**
- * This function checks for collisions between throwable objects and enemies in a game and removes the
- * throwable object and sets the enemy to dead if a collision occurs.
- */
-checkThrowableObjectCollisions() {
-    for (let i = this.throwableObjects.length - 1; i >= 0; i--) {
-        const throwableObject = this.throwableObjects[i];
-
-        for (let j = this.level.enemies.length - 1; j >= 0; j--) {
-            const enemy = this.level.enemies[j];
-            if (throwableObject.isColliding(enemy) && (enemy.type === 'chicken' || enemy.type === 'smallchicken')) {
-                // Set the throwable object to broken
-                throwableObject.isBroken = true;
-                throwableObject.loadImages(throwableObject.IMAGES_BOTTLE_BREAKING);
-
-                // Set the enemy to dead and display dead images
-                enemy.isDead = true;
-                enemy.loadImage(enemy.IMAGES_DEAD[0]);
-
-                if (enemy.type === 'chicken') {
-                    enemy.y = 351;
-                    setTimeout(() => {
-                        const enemyIndex = this.level.enemies.indexOf(enemy);
-                        if (enemyIndex > -1) {
-                            this.level.enemies.splice(enemyIndex, 1);
-                        }
-                    }, 500);
-                } else if (enemy.type === 'smallchicken') {
-                    enemy.y = 375;
-                    setTimeout(() => {
-                        const enemyIndex = this.level.enemies.indexOf(enemy);
-                        if (enemyIndex > -1) {
-                            this.level.enemies.splice(enemyIndex, 1);
-                        }
-                    }, 500);
+    /**
+     * This function checks for collisions between throwable objects and enemies in a game and removes the
+     * throwable object and sets the enemy to dead if a collision occurs.
+     */
+    /**
+     * Handles throwable object collisions with enemies.
+     */
+    checkThrowableObjectCollisions() {
+        for (let i = this.throwableObjects.length - 1; i >= 0; i--) {
+            const throwableObject = this.throwableObjects[i];
+            if (!throwableObject.isBroken) {
+                for (let j = this.level.enemies.length - 1; j >= 0; j--) {
+                    const enemy = this.level.enemies[j];
+                    if (throwableObject.isColliding(enemy) && (enemy.type === 'chicken' || enemy.type === 'smallchicken' || enemy.type === 'endboss')) {
+                        this.handleThrowableObjectCollision(throwableObject, enemy, i);
+                        break;
+                    }
                 }
-                break;
             }
         }
     }
-}
+
+    /**
+     * Handles the collision between a throwable object and an enemy.
+     * @param {ThrowableObject} throwableObject - The throwable object involved in the collision.
+     * @param {MovableObject} enemy - The enemy involved in the collision.
+     * @param {number} throwableObjectIndex - The index of the throwable object in the throwableObjects array.
+     */
+    handleThrowableObjectCollision(throwableObject, enemy, throwableObjectIndex) {
+        this.breakThrowableObject(throwableObject);
+        this.removeThrowableObject(throwableObjectIndex);
+        enemy.isDead = true;
+        enemy.loadImage(enemy.IMAGES_DEAD[0]);
+        if (enemy.type === 'chicken') {
+            this.handleChickenCollision(enemy);
+        } else if (enemy.type === 'smallchicken') {
+            this.handleSmallChickenCollision(enemy);
+        } else if (enemy.type === 'endboss') {
+            this.handleEndbossCollision(enemy);
+        }
+    }
+
+    /**
+     * Breaks the throwable object after a collision.
+     * @param {ThrowableObject} throwableObject - The throwable object to break.
+     */
+    breakThrowableObject(throwableObject) {
+        throwableObject.isBroken = true;
+        throwableObject.currentImage = 0;
+        throwableObject.loadImages(throwableObject.IMAGES_BOTTLE_BREAKING);
+    }
+
+    /**
+     * Removes the throwable object from the array after a collision.
+     * @param {number} index - The index of the throwable object in the throwableObjects array.
+     */
+    removeThrowableObject(index) {
+        setTimeout(() => {
+            this.throwableObjects.splice(index, 1);
+        }, 600);
+    }
+
+    /**
+     * Handles the collision between a throwable object and a chicken enemy.
+     * @param {MovableObject} enemy - The chicken enemy involved in the collision.
+     */
+    handleChickenCollision(enemy) {
+        enemy.y = 351;
+        setTimeout(() => {
+            const enemyIndex = this.level.enemies.indexOf(enemy);
+            if (enemyIndex > -1) {
+                this.level.enemies.splice(enemyIndex, 1);
+            }
+        }, 500);
+    }
+
+    /**
+     * Handles the collision between a throwable object and a small chicken enemy.
+     * @param {MovableObject} enemy - The small chicken enemy involved in the collision.
+     */
+    handleSmallChickenCollision(enemy) {
+        enemy.y = 375;
+        setTimeout(() => {
+            const enemyIndex = this.level.enemies.indexOf(enemy);
+            if (enemyIndex > -1) {
+                this.level.enemies.splice(enemyIndex, 1);
+            }
+        }, 500);
+    }
+
+    /**
+     * Handles the collision between a throwable object and the endboss.
+     * @param {MovableObject} enemy - The endboss involved in the collision.
+     */
+    handleEndbossCollision(enemy) {
+        enemy.health -= 1;
+        if (enemy.health <= 0) {
+            setTimeout(() => {
+                const enemyIndex = this.level.enemies.indexOf(enemy);
+                if (enemyIndex > -1) {
+                    this.level.enemies.splice(enemyIndex, 1);
+                }
+            }, 500);
+        }
+    }
+
 
     /**
     Checks if the character collides with a chicken and if it is below it, kills the chicken.
@@ -158,6 +225,29 @@ checkThrowableObjectCollisions() {
             enemy.isDead = true;
             enemy.loadImage(enemy.IMAGES_DEAD);
             enemy.y = 375;
+            this.character.bounceOnCollision(enemy);
+            setTimeout(() => {
+                const enemyIndex = this.level.enemies.indexOf(enemy);
+                if (enemyIndex > -1) {
+                    this.level.enemies.splice(enemyIndex, 1);
+                }
+            }, 500);
+        } else {
+            this.character.hit();
+            this.statusBar.setPercentage(this.character.health);
+        }
+    }
+
+    /**
+Checks if the character collides with a smallchicken and if it is below it, kills the smallchicken.
+Otherwise, hits the character and updates the status bar.
+@param {Object} enemy - The smallchicken to check collision with.
+*/
+    checkEndbossCollision(enemy) {
+        if (this.character.y + this.character.height <= enemy.y + enemy.height + 6) {
+            console.log('Endboss');
+            enemy.isDead = true;
+            enemy.loadImage(enemy.IMAGES_DEAD);
             this.character.bounceOnCollision(enemy);
             setTimeout(() => {
                 const enemyIndex = this.level.enemies.indexOf(enemy);

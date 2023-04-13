@@ -46,14 +46,7 @@ class ThrowableObject extends MovableObject {
             if (this.isBroken) {
                 this.speedY = 0;
                 this.speedX = 0;
-                this.playAnimation(this.IMAGES_BOTTLE_BREAKING, () => {
-                    if (this.currentImage === this.IMAGES_BOTTLE_BREAKING.length - 1) {
-                        const throwableObjectIndex = this.world.throwableObjects.indexOf(this);
-                        if (throwableObjectIndex > -1) {
-                            this.world.throwableObjects.splice(throwableObjectIndex, 1);
-                        }
-                    }
-                });
+                this.playAnimation(this.IMAGES_BOTTLE_BREAKING);
             }
         };
     

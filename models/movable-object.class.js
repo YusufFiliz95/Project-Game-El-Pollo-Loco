@@ -76,6 +76,15 @@ class MovableObject extends DrawableObject {
 
     moveLeft() {
         setInterval(() => {
+            if (!this.isDead) {
+                this.x -= this.speed;
+            }
+        }, 1000 / 60)
+    }
+    
+    
+    moveCloudLeft() {
+        setInterval(() => {
             this.x -= this.speed;
         }, 1000 / 60)
     }

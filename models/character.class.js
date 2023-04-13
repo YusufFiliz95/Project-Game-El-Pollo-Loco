@@ -1,6 +1,6 @@
 class Character extends MovableObject {
 
-    type = 'chicken'
+    type = 'character'
     width = 110;
     height = 220;
     y = -50; // 135
@@ -166,7 +166,7 @@ class Character extends MovableObject {
                 playCurrentAnimation();
             }
         };
-        const animationInterval = setInterval(updateAnimation, 55);
+        setInterval(updateAnimation, 55);
     }
 
     jump() {
