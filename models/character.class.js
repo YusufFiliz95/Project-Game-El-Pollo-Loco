@@ -4,8 +4,9 @@ class Character extends MovableObject {
     width = 110;
     height = 220;
     y = -50; // 135
-    speed = 5;
+    speed = 50; //5
     isJumping = false;
+    startPositionX = this.x;
 
     IMAGES_STANDING = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
@@ -180,6 +181,9 @@ class Character extends MovableObject {
         this.speedY = 40;
     }
     
+    getDistanceTraveled() {
+        return Math.abs(this.x - this.startPositionX);
+    }
 
     hitbox = new Hitbox(85, 25, 10, 20);
 }

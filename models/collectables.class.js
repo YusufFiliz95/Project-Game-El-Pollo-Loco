@@ -174,8 +174,8 @@ let lastXCoordinateCoin = 0;
 let lastXCoordinateBottle = 0;
 const minDistanceBetweenCoinPatterns = 200;
 const minDistanceBetweenBottlePatterns = 200;
-const maxCoinRange = 3600;
-const maxBottleRange = 3600;
+const maxCoinRange = 5600;
+const maxBottleRange = 5600;
 
 function createAlternatingPattern() {
     let items = [];

@@ -40,21 +40,33 @@ class World {
                 this.throwableObjects.push(bottle);
             }
         };
-
+    
+        const timeLimit = 1000;
+        const currentTime = Date.now();
+    
         if (this.keyboard.E && this.keyboard.keyReleased.E) {
-            this.keyboard.keyReleased.E = false;
-            throwBottleIfPossible();
+            if (!this.lastThrowTime || currentTime - this.lastThrowTime >= timeLimit) {
+                this.lastThrowTime = currentTime;
+                this.keyboard.keyReleased.E = false;
+                throwBottleIfPossible();
+            }
         }
         if (this.keyboard.F && this.keyboard.keyReleased.F) {
-            this.keyboard.keyReleased.F = false;
-            throwBottleIfPossible();
+            if (!this.lastThrowTime || currentTime - this.lastThrowTime >= timeLimit) {
+                this.lastThrowTime = currentTime;
+                this.keyboard.keyReleased.F = false;
+                throwBottleIfPossible();
+            }
         }
         if (this.keyboard.ENTER && this.keyboard.keyReleased.ENTER) {
-            this.keyboard.keyReleased.ENTER = false;
-            throwBottleIfPossible();
+            if (!this.lastThrowTime || currentTime - this.lastThrowTime >= timeLimit) {
+                this.lastThrowTime = currentTime;
+                this.keyboard.keyReleased.ENTER = false;
+                throwBottleIfPossible();
+            }
         }
     }
-
+    
     /**
     Checks collisions between the character and enemies.
     If the character collides with a chicken, checks if the character is above it and kills the chicken.
@@ -295,6 +307,16 @@ Otherwise, hits the character and updates the status bar.
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
 
+        const distanceTraveled = this.character.getDistanceTraveled();
+        console.log("Zurückgelegte Strecke:", distanceTraveled);
+
+        if (distanceTraveled >= 6300) {
+            const endboss = this.level.enemies.find(enemy => enemy.type === 'endboss');
+            if (endboss && !endboss.isAlert) {
+                endboss.isAlert = true;
+            }
+        }
+
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBar);
         this.addToMap(this.statusBarBottle);
@@ -302,7 +324,6 @@ Otherwise, hits the character and updates the status bar.
         this.ctx.translate(this.camera_x, 0);
 
         this.ctx.translate(-this.camera_x, 0);
-
 
         let self = this;
         requestAnimationFrame(function () {
