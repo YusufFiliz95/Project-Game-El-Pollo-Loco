@@ -62,22 +62,43 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_HURT);
         this.x = 6750;
         this.animate();
+        this.isAlert = false;
+        this.movingLeft = false;
+
+        this.speed = 0.8;
     }
 
     animate() {
-        const sleepingInterval = setInterval(() => {
+        setInterval(() => {
             if (!this.isAlert) {
                 this.playAnimation(this.IMAGES_SLEEPING);
             }
         }, 800);
 
-        const alertInterval = setInterval(() => {
+        setInterval(() => {
             if (this.isAlert) {
                 this.playAnimation(this.IMAGES_ALERT);
             }
         }, 200);
-
     }
+
+    moveLeft() {
+        if (!this.movingLeft) {
+            this.movingLeft = true;
+    
+            const move = () => {
+                if (this.isAlert && this.movingLeft) {
+                    this.x -= this.speed;
+                    requestAnimationFrame(move);
+                } else {
+                    this.movingLeft = false;
+                }
+            };
+    
+            requestAnimationFrame(move);
+        }
+    }
+    
 
     hitbox = new Hitbox(80, 40, 10, 30);
 }

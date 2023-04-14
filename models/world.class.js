@@ -9,6 +9,7 @@ class World {
     statusBar = new StatusBar();
     statusBarBottle = new StatusBarBottle();
     statusBarCoin = new StatusBarCoin();
+    statusBarEndboss = new StatusBarEndboss();
     throwableObjects = [];
 
     constructor(canvas, keyboard) {
@@ -310,16 +311,25 @@ Otherwise, hits the character and updates the status bar.
         const distanceTraveled = this.character.getDistanceTraveled();
         console.log("Zurückgelegte Strecke:", distanceTraveled);
 
-        if (distanceTraveled >= 6300) {
+        if (distanceTraveled >= 6400) {
             const endboss = this.level.enemies.find(enemy => enemy.type === 'endboss');
             if (endboss && !endboss.isAlert) {
                 endboss.isAlert = true;
             }
         }
+    
+        // Call move() method for the endboss
+        this.level.enemies.forEach(enemy => {
+            if (enemy.type === 'endboss' && enemy.isAlert) {
+                enemy.moveLeft();
+            }
+        });
+    
 
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBar);
         this.addToMap(this.statusBarBottle);
+        this.addToMap(this.statusBarEndboss);
         this.addToMap(this.statusBarCoin);
         this.ctx.translate(this.camera_x, 0);
 
