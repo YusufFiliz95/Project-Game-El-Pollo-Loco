@@ -4,7 +4,7 @@ class Character extends MovableObject {
     width = 110;
     height = 220;
     y = -50; // 135
-    speed = 5; //5
+    speed = 30; //5
     isJumping = false;
     startPositionX = this.x;
 
@@ -174,6 +174,10 @@ class Character extends MovableObject {
         if (!this.isAboveGround()) {
             this.speedY = 40;
         }
+    }
+
+    hit() {
+        this.x -= 100;
     }
 
     bounceOnCollision(enemy) {

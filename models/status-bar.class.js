@@ -44,20 +44,6 @@ class StatusBar extends DrawableObject {
     }
 }
 
-class StatusBarEndboss extends DrawableObject {
-    IMAGE_ENDBOSS = [
-        'img/7_statusbars/3_icons/icon_health_endboss.png'
-    ]
-
-    constructor() {
-        super();
-        this.loadImage(this.IMAGE_ENDBOSS);
-        this.x = 580;
-        this.y = 1;
-        this.width = 120;
-        this.height = 120;
-    }
-}
 
 class StatusBarBottle extends DrawableObject {
     IMAGE_BOTTLE = [

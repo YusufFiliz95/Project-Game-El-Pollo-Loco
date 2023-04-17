@@ -9,7 +9,6 @@ class World {
     statusBar = new StatusBar();
     statusBarBottle = new StatusBarBottle();
     statusBarCoin = new StatusBarCoin();
-    statusBarEndboss = new StatusBarEndboss();
     throwableObjects = [];
 
     constructor(canvas, keyboard) {
@@ -41,10 +40,10 @@ class World {
                 this.throwableObjects.push(bottle);
             }
         };
-    
+
         const timeLimit = 1000;
         const currentTime = Date.now();
-    
+
         if (this.keyboard.E && this.keyboard.keyReleased.E) {
             if (!this.lastThrowTime || currentTime - this.lastThrowTime >= timeLimit) {
                 this.lastThrowTime = currentTime;
@@ -67,7 +66,7 @@ class World {
             }
         }
     }
-    
+
     /**
     Checks collisions between the character and enemies.
     If the character collides with a chicken, checks if the character is above it and kills the chicken.
@@ -86,7 +85,7 @@ class World {
                 } else if (enemy.type === 'smallchicken') {
                     this.checkSmallChickenCollision(enemy);
                 } else if (enemy.type === 'endboss') {
-                    this.checkEndbossCollision(index);
+                    this.checkEndbossCollision(enemy);
                 } else if (enemy.type === 'coin') {
                     this.checkCoinCollision(index);
                 } else if (enemy.type === 'bottle') {
@@ -251,35 +250,28 @@ class World {
         }
     }
 
-    /**
-Checks if the character collides with a smallchicken and if it is below it, kills the smallchicken.
-Otherwise, hits the character and updates the status bar.
-@param {Object} enemy - The smallchicken to check collision with.
-*/
+
     checkEndbossCollision(enemy) {
         if (this.character.y + this.character.height <= enemy.y + enemy.height + 6) {
-            console.log('Endboss');
-            enemy.isDead = true;
-            enemy.loadImage(enemy.IMAGES_DEAD);
-            this.character.bounceOnCollision(enemy);
-            setTimeout(() => {
-                const enemyIndex = this.level.enemies.indexOf(enemy);
-                if (enemyIndex > -1) {
-                    this.level.enemies.splice(enemyIndex, 1);
-                }
-            }, 500);
-        } else {
+            enemy.playAnimation(enemy.IMAGES_ATTACKING);
+            enemy.stopMoving();
             this.character.hit();
             this.statusBar.setPercentage(this.character.health);
+
+            setTimeout(() => {
+                enemy.resumeMoving();
+                enemy.moveLeft();
+            }, 1000);
         }
     }
+
+
 
     /**
     Increments the coin count, removes the coin, and checks if the bottle count should be incremented.
     @param {number} index - The index of the coin in the enemies array.
     */
     checkCoinCollision(index) {
-        console.log('Coin');
         this.statusBarCoin.incrementCount();
         this.level.enemies.splice(index, 1);
         if (this.statusBarCoin.count % 3 === 0) {
@@ -292,7 +284,6 @@ Otherwise, hits the character and updates the status bar.
     @param {number} index - The index of the bottle in the enemies array.
     */
     checkBottleCollision(index) {
-        console.log('Bottle');
         this.statusBarBottle.incrementCount();
         this.level.enemies.splice(index, 1);
     }
@@ -309,27 +300,24 @@ Otherwise, hits the character and updates the status bar.
         this.addObjectsToMap(this.throwableObjects);
 
         const distanceTraveled = this.character.getDistanceTraveled();
-        console.log("Zurückgelegte Strecke:", distanceTraveled);
-
         if (distanceTraveled >= 6400) {
             const endboss = this.level.enemies.find(enemy => enemy.type === 'endboss');
             if (endboss && !endboss.isAlert) {
                 endboss.isAlert = true;
             }
         }
-    
+
         // Call move() method for the endboss
         this.level.enemies.forEach(enemy => {
             if (enemy.type === 'endboss' && enemy.isAlert) {
                 enemy.moveLeft();
             }
         });
-    
+
 
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBar);
         this.addToMap(this.statusBarBottle);
-        this.addToMap(this.statusBarEndboss);
         this.addToMap(this.statusBarCoin);
         this.ctx.translate(this.camera_x, 0);
 
