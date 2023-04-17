@@ -70,6 +70,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
+        this.applyHorizontalDamping();
         this.applyGravity();
         this.animate();
     }
@@ -176,8 +177,9 @@ class Character extends MovableObject {
         }
     }
 
-    hit() {
-        this.x -= 100;
+    hitByEndboss() {
+        this.speedX = -35;
+        this.speedY = 40;
     }
 
     bounceOnCollision(enemy) {
@@ -187,6 +189,33 @@ class Character extends MovableObject {
     
     getDistanceTraveled() {
         return Math.abs(this.x - this.startPositionX);
+    }
+
+        applyGravity() {
+        setInterval(() => {
+            this.x += this.speedX;
+
+            if (this.isAboveGround() || this.speedY > 0) {
+                this.y -= this.speedY;
+                this.speedY -= this.acceleration;
+
+
+                if (this.y < this.maxHeight) {
+                    this.speedY = 0;
+                    this.y = this.maxHeight;
+                }
+            }
+        }, 40);
+    }
+
+    applyHorizontalDamping() {
+        setInterval(() => {
+            if (Math.abs(this.speedX) > 0.1) {
+                this.speedX *= 0.9;
+            } else {
+                this.speedX = 0;
+            }
+        }, 40);
     }
 
     hitbox = new Hitbox(85, 25, 10, 20);

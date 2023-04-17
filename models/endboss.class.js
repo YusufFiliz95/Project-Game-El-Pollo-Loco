@@ -6,8 +6,20 @@ class Endboss extends MovableObject {
     width = 300;
     y = 100;
     standing = true;
+    attacking = false;
+    walking = false;
+    hurt = false;
 
     IMAGES_WALKING = [
+        'img/4_enemie_boss_chicken/1_walk/G1.png',
+        'img/4_enemie_boss_chicken/1_walk/G2.png',
+        'img/4_enemie_boss_chicken/1_walk/G3.png',
+        'img/4_enemie_boss_chicken/1_walk/G1.png',
+        'img/4_enemie_boss_chicken/1_walk/G2.png',
+        'img/4_enemie_boss_chicken/1_walk/G3.png',
+        'img/4_enemie_boss_chicken/1_walk/G1.png',
+        'img/4_enemie_boss_chicken/1_walk/G2.png',
+        'img/4_enemie_boss_chicken/1_walk/G3.png',
         'img/4_enemie_boss_chicken/1_walk/G1.png',
         'img/4_enemie_boss_chicken/1_walk/G2.png',
         'img/4_enemie_boss_chicken/1_walk/G3.png',
@@ -76,11 +88,37 @@ class Endboss extends MovableObject {
                 this.playAnimation(this.IMAGES_ALERT);
             }
         }, 200);
+
+        setInterval(() => {
+            if (this.attacking) {
+                this.playAnimation(this.IMAGES_ATTACKING, true);
+            }
+        }, 100);
+
+        setInterval(() => {
+            if (this.walking) {
+                this.playAnimation(this.IMAGES_WALKING, true);
+            }
+        }, 100);
+
+        setInterval(() => {
+            if (this.hurt) {
+                this.playAnimation(this.IMAGES_HURT, true);
+            }
+        }, 200);
+    }
+
+    resetAnimation() {
+        this.currentImage = 0;
+        this.loadImages(this.IMAGES_ATTACKING); 
     }
 
     moveLeft() {
         if (!this.movingLeft && !this.standing) {
             this.movingLeft = true;
+            this.walking = true;
+            this.standing = true;
+            
 
             const move = () => {
                 if (this.isAlert && this.movingLeft) {
@@ -88,6 +126,7 @@ class Endboss extends MovableObject {
                     requestAnimationFrame(move);
                 } else {
                     this.movingLeft = false;
+                    this.walking = false;
                 }
             };
     
@@ -105,5 +144,5 @@ class Endboss extends MovableObject {
     }
 
 
-    hitbox = new Hitbox(80, 40, 10, 30);
+    hitbox = new Hitbox(80, 40, 10, 40);
 }

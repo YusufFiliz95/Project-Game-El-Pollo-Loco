@@ -127,11 +127,12 @@ class World {
         this.breakThrowableObject(throwableObject);
         this.removeThrowableObject(throwableObjectIndex);
         enemy.isDead = true;
-        enemy.loadImage(enemy.IMAGES_DEAD[0]);
         if (enemy.type === 'chicken') {
             this.handleChickenCollision(enemy);
+            enemy.loadImage(enemy.IMAGES_DEAD[0]);
         } else if (enemy.type === 'smallchicken') {
             this.handleSmallChickenCollision(enemy);
+            enemy.loadImage(enemy.IMAGES_DEAD[0]);
         } else if (enemy.type === 'endboss') {
             this.handleEndbossCollision(enemy);
         }
@@ -185,21 +186,27 @@ class World {
         }, 500);
     }
 
-    /**
-     * Handles the collision between a throwable object and the endboss.
-     * @param {MovableObject} enemy - The endboss involved in the collision.
-     */
-    handleEndbossCollision(enemy) {
-        enemy.health -= 1;
-        if (enemy.health <= 0) {
-            setTimeout(() => {
-                const enemyIndex = this.level.enemies.indexOf(enemy);
-                if (enemyIndex > -1) {
-                    this.level.enemies.splice(enemyIndex, 1);
-                }
-            }, 500);
-        }
+/**
+ * Handles the collision between a throwable object and the endboss.
+ * @param {MovableObject} enemy - The endboss involved in the collision.
+ */
+handleEndbossCollision(enemy) {
+    enemy.health -= 1;
+    if (enemy.health > 0) {
+        enemy.loadImages(enemy.IMAGES_HURT);
+        enemy.playAnimation(enemy.IMAGES_HURT.length, () => {
+            enemy.resetAnimation();
+        });
+    } else {
+        enemy.loadImages(enemy.IMAGES_DEAD);
+        setTimeout(() => {
+            const enemyIndex = this.level.enemies.indexOf(enemy);
+            if (enemyIndex > -1) {
+                this.level.enemies.splice(enemyIndex, 1);
+            }
+        }, 500);
     }
+}
 
 
     /**
@@ -253,19 +260,21 @@ class World {
 
     checkEndbossCollision(enemy) {
         if (this.character.y + this.character.height <= enemy.y + enemy.height + 6) {
-            enemy.playAnimation(enemy.IMAGES_ATTACKING);
+            enemy.attacking = true;
+            enemy.resetAnimation();
             enemy.stopMoving();
-            this.character.hit();
+            this.character.hitByEndboss();
             this.statusBar.setPercentage(this.character.health);
-
+    
             setTimeout(() => {
+                enemy.attacking = false;
                 enemy.resumeMoving();
                 enemy.moveLeft();
-            }, 1000);
+                enemy.resetAnimation();
+            }, 1200);
         }
     }
-
-
+    
 
     /**
     Increments the coin count, removes the coin, and checks if the bottle count should be incremented.
