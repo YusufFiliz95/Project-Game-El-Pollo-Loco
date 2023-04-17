@@ -126,13 +126,14 @@ class World {
     handleThrowableObjectCollision(throwableObject, enemy, throwableObjectIndex) {
         this.breakThrowableObject(throwableObject);
         this.removeThrowableObject(throwableObjectIndex);
-        enemy.isDead = true;
         if (enemy.type === 'chicken') {
             this.handleChickenCollision(enemy);
             enemy.loadImage(enemy.IMAGES_DEAD[0]);
+            enemy.isDead = true;
         } else if (enemy.type === 'smallchicken') {
             this.handleSmallChickenCollision(enemy);
             enemy.loadImage(enemy.IMAGES_DEAD[0]);
+            enemy.isDead = true;
         } else if (enemy.type === 'endboss') {
             this.handleEndbossCollision(enemy);
         }
@@ -191,22 +192,32 @@ class World {
  * @param {MovableObject} enemy - The endboss involved in the collision.
  */
 handleEndbossCollision(enemy) {
-    enemy.health -= 1;
-    if (enemy.health > 0) {
-        enemy.loadImages(enemy.IMAGES_HURT);
-        enemy.playAnimation(enemy.IMAGES_HURT.length, () => {
-            enemy.resetAnimation();
-        });
-    } else {
-        enemy.loadImages(enemy.IMAGES_DEAD);
-        setTimeout(() => {
-            const enemyIndex = this.level.enemies.indexOf(enemy);
-            if (enemyIndex > -1) {
-                this.level.enemies.splice(enemyIndex, 1);
-            }
-        }, 500);
+    enemy.hits += 1;
+
+    if (enemy.hits === 4) {
+        enemy.dead = true;
+        enemy.stopMoving();
+        return;
     }
+
+    enemy.stopMoving();
+    enemy.hurt = true;
+    setTimeout(() => {
+        enemy.hurt = false;
+        enemy.resumeMoving();
+    }, 1500);
+
+    setTimeout(() => {
+        enemy.speed *= 8; // Increase the speed
+    }, 300);
+
+    setTimeout(() => {
+        enemy.speed /= 8; // Reset the speed back to normal
+    }, 1800);
 }
+
+
+
 
 
     /**
@@ -265,7 +276,7 @@ handleEndbossCollision(enemy) {
             enemy.stopMoving();
             this.character.hitByEndboss();
             this.statusBar.setPercentage(this.character.health);
-    
+
             setTimeout(() => {
                 enemy.attacking = false;
                 enemy.resumeMoving();
@@ -274,7 +285,7 @@ handleEndbossCollision(enemy) {
             }, 1200);
         }
     }
-    
+
 
     /**
     Increments the coin count, removes the coin, and checks if the bottle count should be incremented.
