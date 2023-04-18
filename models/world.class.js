@@ -18,6 +18,7 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+        this.lastHitTime = 0;
     }
 
     setWorld() {
@@ -147,6 +148,7 @@ class World {
         throwableObject.isBroken = true;
         throwableObject.currentImage = 0;
         throwableObject.loadImages(throwableObject.IMAGES_BOTTLE_BREAKING);
+        this.character.bottle_breaking.play();
     }
 
     /**
@@ -200,6 +202,12 @@ handleEndbossCollision(enemy) {
         return;
     }
 
+    // if the player has collided with the endboss, set isAlert to true so that
+    // the endboss will start moving towards the player
+    if (!enemy.isAlert) {
+        enemy.isAlert = true;
+    }
+
     enemy.stopMoving();
     enemy.hurt = true;
     setTimeout(() => {
@@ -209,16 +217,12 @@ handleEndbossCollision(enemy) {
 
     setTimeout(() => {
         enemy.speed *= 8; // Increase the speed
-    }, 300);
+    }, 250);
 
     setTimeout(() => {
         enemy.speed /= 8; // Reset the speed back to normal
     }, 1800);
 }
-
-
-
-
 
     /**
     Checks if the character collides with a chicken and if it is below it, kills the chicken.
@@ -230,6 +234,7 @@ handleEndbossCollision(enemy) {
             console.log('Chicken');
             enemy.isDead = true;
             enemy.loadImage(enemy.IMAGES_DEAD);
+            this.character.jumping_sound.play();
             enemy.y = 351;
             this.character.bounceOnCollision(enemy);
             setTimeout(() => {
@@ -239,21 +244,32 @@ handleEndbossCollision(enemy) {
                 }
             }, 500);
         } else {
-            this.character.hit();
-            this.statusBar.setPercentage(this.character.health);
+            const currentTime = Date.now();
+            if (currentTime - this.lastHitTime >= 1000) {
+                this.character.hit();
+                this.statusBar.setPercentage(this.character.health);
+                this.lastHitTime = currentTime;
+            }
         }
     }
-
+    
     /**
     Checks if the character collides with a smallchicken and if it is below it, kills the smallchicken.
     Otherwise, hits the character and updates the status bar.
     @param {Object} enemy - The smallchicken to check collision with.
     */
     checkSmallChickenCollision(enemy) {
+        const currentTime = Date.now();
+        if (currentTime - this.lastCollisionTime < 1300) {
+            // Ignore the collision if it's been less than 3 seconds since the last one
+            return;
+        }
+        this.lastCollisionTime = currentTime;
         if (this.character.y + this.character.height <= enemy.y + enemy.height + 6) {
             console.log('Smallchicken');
             enemy.isDead = true;
             enemy.loadImage(enemy.IMAGES_DEAD);
+            this.character.jumping_sound.play();
             enemy.y = 375;
             this.character.bounceOnCollision(enemy);
             setTimeout(() => {
@@ -263,13 +279,23 @@ handleEndbossCollision(enemy) {
                 }
             }, 500);
         } else {
-            this.character.hit();
-            this.statusBar.setPercentage(this.character.health);
+            const currentTime = Date.now();
+            if (currentTime - this.lastHitTime >= 1300) {
+                this.character.hit();
+                this.statusBar.setPercentage(this.character.health);
+                this.lastHitTime = currentTime;
+            }
         }
     }
 
 
     checkEndbossCollision(enemy) {
+        const currentTime = Date.now();
+        if (currentTime - this.lastCollisionTime < 1300) {
+            // Ignore the collision if it's been less than 3 seconds since the last one
+            return;
+        }
+        this.lastCollisionTime = currentTime;
         if (this.character.y + this.character.height <= enemy.y + enemy.height + 6) {
             enemy.attacking = true;
             enemy.resetAnimation();
@@ -282,7 +308,7 @@ handleEndbossCollision(enemy) {
                 enemy.resumeMoving();
                 enemy.moveLeft();
                 enemy.resetAnimation();
-            }, 1200);
+            }, 1300);
         }
     }
 
@@ -293,11 +319,19 @@ handleEndbossCollision(enemy) {
     */
     checkCoinCollision(index) {
         this.statusBarCoin.incrementCount();
+    
+        // Create a new Audio instance and play the sound
+        const coinSound = new Audio(this.character.collect_coin.src);
+        coinSound.play();
+        coinSound.playbackRate = 1;
+        coinSound.volume = 0.4;
+    
         this.level.enemies.splice(index, 1);
         if (this.statusBarCoin.count % 3 === 0) {
             this.statusBarBottle.incrementCount();
         }
     }
+    
 
     /**
     Increments the bottle count and removes the bottle.
@@ -305,8 +339,15 @@ handleEndbossCollision(enemy) {
     */
     checkBottleCollision(index) {
         this.statusBarBottle.incrementCount();
+    
+        // Create a new Audio instance and play the sound
+        const bottleSound = new Audio(this.character.collect_bottle.src);
+        bottleSound.play();
+    
         this.level.enemies.splice(index, 1);
     }
+    
+    
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -327,7 +368,6 @@ handleEndbossCollision(enemy) {
             }
         }
 
-        // Call move() method for the endboss
         this.level.enemies.forEach(enemy => {
             if (enemy.type === 'endboss' && enemy.isAlert) {
                 enemy.moveLeft();

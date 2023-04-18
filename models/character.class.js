@@ -4,7 +4,7 @@ class Character extends MovableObject {
     width = 110;
     height = 220;
     y = -50; // 135
-    speed = 30; //5
+    speed = 50; //5
     isJumping = false;
     startPositionX = this.x;
 
@@ -60,6 +60,12 @@ class Character extends MovableObject {
 
     world;
     walking_sound = new Audio('audio/running.mp3');
+    jumping_sound = new Audio('audio/jump.mp3');
+    is_hurt = new Audio('audio/hurt.mp3');
+    is_dead = new Audio('audio/dead.mp3');
+    collect_coin = new Audio('audio/coin.mp3');
+    collect_bottle = new Audio('audio/bottle.mp3');
+    bottle_breaking = new Audio('audio/glass.mp3');
 
 
 
@@ -140,8 +146,10 @@ class Character extends MovableObject {
             if (this.isDead()) {
                 newAnimation = this.IMAGES_DEAD;
                 newTimeout = 100;
+                this.is_dead.play();
             } else if (this.isHurt()) {
                 newAnimation = this.IMAGES_HURT;
+                this.is_hurt.play();
                 newTimeout = 100;
             } else if (this.isAboveGround()) {
                 this.walking_sound.pause();
@@ -174,12 +182,19 @@ class Character extends MovableObject {
     jump() {
         if (!this.isAboveGround()) {
             this.speedY = 40;
+            this.jumping_sound.play();
         }
     }
 
     hitByEndboss() {
         this.speedX = -35;
         this.speedY = 40;
+        this.health -= 20;
+        if (this.health < 0) {
+            this.health = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
     }
 
     bounceOnCollision(enemy) {
