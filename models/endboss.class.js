@@ -112,9 +112,13 @@ class Endboss extends MovableObject {
         setInterval(() => {
             if (this.dead) {
                 this.loadImage('img/4_enemie_boss_chicken/5_dead/G26.png');
+                setTimeout(() => {
+                    bgMusic.pause(); // Stop the background music
+                    gameOver(); // Call the gameOver function
+                }, 1000);
             }
         }, 200);
-    }
+    }        
 
     resetAnimation() {
         this.currentImage = 0;

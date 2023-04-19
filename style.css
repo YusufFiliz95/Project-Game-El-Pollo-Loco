@@ -120,12 +120,45 @@ h1 {
     height: 50px;
     font-size: 24px;
     cursor: pointer;
-    position: relative;
-    top: 0;
-    left: 0;
 }
 
 .back:hover{
+    background-color: rgb(255, 203, 92);
+}
+
+.gameover-win {
+    width: 800px;
+    height: 420px;
+    background-color: black;
+    background-image: url('img/5_background/first_half_background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.gameover-win img{
+    width: 800px;
+    height: 420px;
+}
+
+.gameover-win div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: -110px;
+}
+
+.gameover-win button{
+    background-color: rgb(243, 188, 70);
+    width: 150px;
+    font-family: 'zabars';
+    height: 60px;
+    font-size: 30px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.gameover-win button:hover{
     background-color: rgb(255, 203, 92);
 }
 

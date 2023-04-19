@@ -72,7 +72,6 @@ class Character extends MovableObject {
     endboss_dead = new Audio('audio/endboss_dead.mp3');
     chicken_dead = new Audio('audio/chicken.mp3');
     smallChicken_dead = new Audio('audio/smallchicken.mp3');
-    game_over = new Audio('audio/game_over.mp3');
 
 
 
@@ -151,11 +150,15 @@ class Character extends MovableObject {
             let newTimeout = null;
 
             if (this.isDead()) {
-                newAnimation = this.IMAGES_DEAD;
-                newTimeout = 100;
-                this.deadOnce = true;
-                this.is_dead.play();
-                setTimeout(gameOver(), 1000);
+                if (!this.deadOnce) {
+                    newAnimation = this.IMAGES_DEAD;
+                    newTimeout = 100;
+                    this.is_dead.play();
+                    setTimeout(() => {
+                        bgMusic.pause(); // Stop the background music
+                        gameOver(); // Call the gameOver function
+                    }, 1000);
+                }
             } else if (this.isHurt()) {
                 newAnimation = this.IMAGES_HURT;
                 this.is_hurt.play();

@@ -1,7 +1,7 @@
 let canvas;
 let world;
 let bgMusic;
-let game_over;
+let game_over = new Audio('audio/game_over.mp3');
 let keyboard = new Keyboard();
 
 
@@ -27,9 +27,30 @@ function playMusic(){
     bgMusic.play();
 }
 
-function gameOver(){
-    
+function changeGameOverWinImage(result) {
+    const gameOverWinImage = document.getElementById('gameoverwin');
+
+    if (result === "win") {
+        gameOverWinImage.src = "img/9_intro_outro_screens/game_over/game over.png";
+    } else if (result === "lose") {
+        gameOverWinImage.src = "img/9_intro_outro_screens/game_over/you lost.png";
+    }
 }
+
+
+
+function gameOver() {
+    canvas.classList.add('d-none');
+    const gameOverWin = document.getElementById('gameoverwinimage');
+    gameOverWin.classList.remove('d-none');
+    
+    if (world && world.level && world.level.endboss && world.level.endboss.dead) {
+        changeGameOverWinImage("win");
+    } else {
+        changeGameOverWinImage("lose");
+    }
+}
+
 
 function openSettings(){
     const gameMenu = document.getElementById('gamemenu');
