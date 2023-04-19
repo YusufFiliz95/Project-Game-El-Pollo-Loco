@@ -1,12 +1,71 @@
 let canvas;
 let world;
+let bgMusic;
+let game_over;
 let keyboard = new Keyboard();
 
 
-function init(){  
+function startGame() {
     canvas = document.getElementById('canvas');
+    document.getElementById('gamemenu').classList.add('d-none');
+    canvas.classList.remove('d-none');
     world = new World(canvas, keyboard);
-    console.log('My Character is', world.character);
+
+    // Call animate() for all chickens and small chickens
+    for (const enemy of world.level.enemies) {
+        if (enemy instanceof Chicken || enemy instanceof Smallchicken) {
+            enemy.animate();
+        }
+    }
+    playMusic();
+}
+
+function playMusic(){
+    bgMusic = new Audio('audio/soundtrack.mp3');
+    bgMusic.loop = true;
+    bgMusic.volume = 0.3;
+    bgMusic.play();
+}
+
+function gameOver(){
+    
+}
+
+function openSettings(){
+    const gameMenu = document.getElementById('gamemenu');
+    gameMenu.innerHTML = /*html*/ `
+    <div class="instructions">
+        <div>
+            <button class="back" onclick="closeSettings()"></button>
+        </div>
+        <div class="context">
+            <div class="move">
+                <p>Move: A D, ← →</p>
+            </div>
+            <div class="jump">
+                <p>Jump: W, SPACE, ↑</p>
+            </div>
+            <div class="throw-bottle">
+                <p>Throw Bottle: E, F, ENTER</p>
+            </div>
+        </div>
+    </div>
+    `;
+}
+
+function closeSettings(){
+    const gameMenu = document.getElementById('gamemenu');
+    gameMenu.innerHTML = /*html*/ `
+        <div class="menu-container-section" id="gamemenu">
+        <div>
+            <button class="start">START</button>
+        </div>
+        <div>
+            <button class="settings-icon sound-off"></button>
+            <button onclick="openSettings()" class="settings-icon setting"></button>
+        </div>
+    </div>
+    `;
 }
 
 window.addEventListener('keydown', (event) => {

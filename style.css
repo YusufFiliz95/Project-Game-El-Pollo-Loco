@@ -12,15 +12,131 @@ body {
     font-size: 2em;
 }
 
+.menu-container-section {
+    width: 800px;
+    height: 480px;
+    display: flex;
+    justify-content: space-between;
+    background-image: url(img/9_intro_outro_screens/start/startscreen_1.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.start{
+    margin-top: 10px;
+    margin-left: 10px;
+    border-radius: 10px;
+    background-color: rgb(243, 188, 70);
+    width: 100px;
+    height: 50px;
+    font-family: 'zabars';
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.start:hover{
+    background-color: rgb(255, 203, 92);
+}
+
+.settings-icon {
+    margin-top: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+    background-color: rgb(243, 188, 70);
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+}
+
+.settings-icon:hover{
+    background-color: rgb(255, 203, 92);
+}
+
+.setting{
+    background-image: url(img/icons/info.svg);
+    background-size: 40px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.sound-off{
+    background-image: url(img/icons/sound-off.svg);
+    background-size: 40px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 h1 {
     margin-top: -60px;
     text-shadow: 6px 6px 4px rgba(0, 0, 0, 0.5)
+}
+
+.instructions {
+    width: 800px;
+    height: 480px;
+    background-color: rgba(85, 85, 85, 0.671);
+    display: flex;
+    justify-content: space-between;
+}
+
+.move, .jump, .throw-bottle {
+    background-color: rgb(255, 203, 92);
+    width: fit-content;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.context {
+    height: 100%;
+    width: 100%;
+    padding-right: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.instructions p {
+    margin: 0;
+}
+
+.back {
+    background-image: url(img/icons/back.svg);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-radius: 10px;
+    background-color: rgb(243, 188, 70);
+    width: 100px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.back:hover{
+    background-color: rgb(255, 203, 92);
 }
 
 @font-face {
     font-family: 'zabars';
     src: url('fonts/zabars.ttf') format('truetype');
     /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+}
+
+.d-none {
+    display: none;
 }
 
 canvas {

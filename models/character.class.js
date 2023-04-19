@@ -8,6 +8,7 @@ class Character extends MovableObject {
     isJumping = false;
     startPositionX = this.x;
 
+
     IMAGES_STANDING = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
         'img/2_character_pepe/1_idle/idle/I-2.png',
@@ -66,6 +67,12 @@ class Character extends MovableObject {
     collect_coin = new Audio('audio/coin.mp3');
     collect_bottle = new Audio('audio/bottle.mp3');
     bottle_breaking = new Audio('audio/glass.mp3');
+    endboss_hurt = new Audio('audio/endboss_hurt.mp3');
+    endboss_attack = new Audio('audio/endboss_attack.mp3');
+    endboss_dead = new Audio('audio/endboss_dead.mp3');
+    chicken_dead = new Audio('audio/chicken.mp3');
+    smallChicken_dead = new Audio('audio/smallchicken.mp3');
+    game_over = new Audio('audio/game_over.mp3');
 
 
 
@@ -85,10 +92,10 @@ class Character extends MovableObject {
         if (this.hitTest(item)) {
             if (item.type === 'coin') {
                 this.collectedCoins++;
-                item.remove(); 
+                item.remove();
             } else if (item.type === 'bottle') {
                 this.collectedBottles++;
-                item.remove(); 
+                item.remove();
             }
         }
     }
@@ -146,7 +153,9 @@ class Character extends MovableObject {
             if (this.isDead()) {
                 newAnimation = this.IMAGES_DEAD;
                 newTimeout = 100;
+                this.deadOnce = true;
                 this.is_dead.play();
+                setTimeout(gameOver(), 1000);
             } else if (this.isHurt()) {
                 newAnimation = this.IMAGES_HURT;
                 this.is_hurt.play();
@@ -201,12 +210,12 @@ class Character extends MovableObject {
         this.y = enemy.y - this.height;
         this.speedY = 40;
     }
-    
+
     getDistanceTraveled() {
         return Math.abs(this.x - this.startPositionX);
     }
 
-        applyGravity() {
+    applyGravity() {
         setInterval(() => {
             this.x += this.speedX;
 

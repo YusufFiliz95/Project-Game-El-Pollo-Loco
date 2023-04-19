@@ -20,7 +20,6 @@ class Chicken extends MovableObject {
         this.x = Chicken.generateXPosition();
         this.speed = 0.15 + Math.random() * 0.4;
 
-        this.animate();
     }
 
     static generateXPosition() {
@@ -41,8 +40,9 @@ class Chicken extends MovableObject {
     }
 
     animate() {
-        this.moveLeft();
-
+        if (world && world.isGameStarted()) {
+            this.moveLeft();
+        }
         setInterval(() => {
             if (!this.isDead) {
                 this.playAnimation(this.IMAGES_WALKING);

@@ -8,9 +8,9 @@ class Hitbox {
 
     draw(ctx, x, y, width, height) {
         ctx.beginPath();
-        ctx.lineWidth = '5'; //This codeline draws the actuall frame of the hitbox
+/*         ctx.lineWidth = '5'; //This codeline draws the actuall frame of the hitbox
         ctx.strokeStyle = 'blue';
-        ctx.rect(x + this.marginLeft, y + this.marginTop, width - this.marginLeft - this.marginRight, height - this.marginTop - this.marginBottom);
+        ctx.rect(x + this.marginLeft, y + this.marginTop, width - this.marginLeft - this.marginRight, height - this.marginTop - this.marginBottom); */
         ctx.stroke();
     }
     

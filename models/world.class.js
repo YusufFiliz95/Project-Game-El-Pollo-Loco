@@ -10,6 +10,9 @@ class World {
     statusBarBottle = new StatusBarBottle();
     statusBarCoin = new StatusBarCoin();
     throwableObjects = [];
+    gameStarted = false;
+    startedMoving = false;
+    endbossMusicPlayed = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -19,10 +22,18 @@ class World {
         this.setWorld();
         this.run();
         this.lastHitTime = 0;
+        this.gameStarted = true;
+        this.endbossMusic = new Audio('audio/endbosssound.mp3');
+        this.endbossMusic.loop = true;
+        this.endbossMusic.volume = 0.3;
     }
 
     setWorld() {
         this.character.world = this;
+    }
+
+    isGameStarted() {
+        return this.gameStarted;
     }
 
     run() {
@@ -135,8 +146,15 @@ class World {
             this.handleSmallChickenCollision(enemy);
             enemy.loadImage(enemy.IMAGES_DEAD[0]);
             enemy.isDead = true;
-        } else if (enemy.type === 'endboss') {
+        } else  if (enemy.type === 'endboss') {
             this.handleEndbossCollision(enemy);
+            if (!this.endbossMusicPlayed) {
+                if (bgMusic) {
+                    bgMusic.pause(); // Stop the background music
+                }
+                this.endbossMusic.play();
+                this.endbossMusicPlayed = true;
+            }
         }
     }
 
@@ -148,7 +166,8 @@ class World {
         throwableObject.isBroken = true;
         throwableObject.currentImage = 0;
         throwableObject.loadImages(throwableObject.IMAGES_BOTTLE_BREAKING);
-        this.character.bottle_breaking.play();
+        const breakingSound = new Audio(this.character.bottle_breaking.src);
+        breakingSound.play();
     }
 
     /**
@@ -167,6 +186,7 @@ class World {
      */
     handleChickenCollision(enemy) {
         enemy.y = 351;
+        this.character.chicken_dead.play();
         setTimeout(() => {
             const enemyIndex = this.level.enemies.indexOf(enemy);
             if (enemyIndex > -1) {
@@ -181,6 +201,7 @@ class World {
      */
     handleSmallChickenCollision(enemy) {
         enemy.y = 375;
+        this.character.smallChicken_dead.play();
         setTimeout(() => {
             const enemyIndex = this.level.enemies.indexOf(enemy);
             if (enemyIndex > -1) {
@@ -189,40 +210,52 @@ class World {
         }, 500);
     }
 
-/**
- * Handles the collision between a throwable object and the endboss.
- * @param {MovableObject} enemy - The endboss involved in the collision.
- */
-handleEndbossCollision(enemy) {
-    enemy.hits += 1;
+    /**
+     * Handles the collision between a throwable object and the endboss.
+     * @param {MovableObject} enemy - The endboss involved in the collision.
+     */
+    handleEndbossCollision(enemy) {
+        if (enemy.isCollided) {
+            return; // if the enemy has already collided, return immediately
+        }
 
-    if (enemy.hits === 4) {
-        enemy.dead = true;
+        enemy.hits += 1;
+
+        if (enemy.hits === 4) {
+            enemy.dead = true;
+            this.character.endboss_dead.play();
+            enemy.stopMoving();
+            return;
+        }
+
+        // set the isCollided flag to prevent collision detection for 1.65 seconds
+        enemy.isCollided = true;
+        setTimeout(() => {
+            enemy.isCollided = false;
+        }, 1650);
+
+        // if the player has collided with the endboss, set isAlert to true so that
+        // the endboss will start moving towards the player
+        if (!enemy.isAlert) {
+            enemy.isAlert = true;
+        }
+        this.character.endboss_hurt.play();
         enemy.stopMoving();
-        return;
+        enemy.hurt = true;
+        setTimeout(() => {
+            enemy.hurt = false;
+            enemy.resumeMoving();
+            enemy.speed *= 1.2;
+        }, 1500);
+
+        setTimeout(() => {
+            enemy.speed *= 8; // Increase the speed
+        }, 150);
+
+        setTimeout(() => {
+            enemy.speed /= 8; // Reset the speed back to normal
+        }, 1650);
     }
-
-    // if the player has collided with the endboss, set isAlert to true so that
-    // the endboss will start moving towards the player
-    if (!enemy.isAlert) {
-        enemy.isAlert = true;
-    }
-
-    enemy.stopMoving();
-    enemy.hurt = true;
-    setTimeout(() => {
-        enemy.hurt = false;
-        enemy.resumeMoving();
-    }, 1500);
-
-    setTimeout(() => {
-        enemy.speed *= 8; // Increase the speed
-    }, 250);
-
-    setTimeout(() => {
-        enemy.speed /= 8; // Reset the speed back to normal
-    }, 1800);
-}
 
     /**
     Checks if the character collides with a chicken and if it is below it, kills the chicken.
@@ -234,6 +267,7 @@ handleEndbossCollision(enemy) {
             console.log('Chicken');
             enemy.isDead = true;
             enemy.loadImage(enemy.IMAGES_DEAD);
+            this.character.chicken_dead.play();
             this.character.jumping_sound.play();
             enemy.y = 351;
             this.character.bounceOnCollision(enemy);
@@ -252,7 +286,7 @@ handleEndbossCollision(enemy) {
             }
         }
     }
-    
+
     /**
     Checks if the character collides with a smallchicken and if it is below it, kills the smallchicken.
     Otherwise, hits the character and updates the status bar.
@@ -269,6 +303,7 @@ handleEndbossCollision(enemy) {
             console.log('Smallchicken');
             enemy.isDead = true;
             enemy.loadImage(enemy.IMAGES_DEAD);
+            this.character.smallChicken_dead.play();
             this.character.jumping_sound.play();
             enemy.y = 375;
             this.character.bounceOnCollision(enemy);
@@ -289,6 +324,13 @@ handleEndbossCollision(enemy) {
     }
 
 
+    /**
+     * The function checks for collision between the player character and an end boss enemy, and triggers
+     * an attack animation and sound effect if a collision occurs.
+     * @param enemy - The parameter "enemy" is an object representing the end boss character in the game.
+     * @returns If it has been less than 1300 milliseconds since the last collision, the function returns
+     * without doing anything. Otherwise, the function proceeds with the collision detection and handling.
+     */
     checkEndbossCollision(enemy) {
         const currentTime = Date.now();
         if (currentTime - this.lastCollisionTime < 1300) {
@@ -298,6 +340,7 @@ handleEndbossCollision(enemy) {
         this.lastCollisionTime = currentTime;
         if (this.character.y + this.character.height <= enemy.y + enemy.height + 6) {
             enemy.attacking = true;
+            this.character.endboss_attack.play();
             enemy.resetAnimation();
             enemy.stopMoving();
             this.character.hitByEndboss();
@@ -319,19 +362,19 @@ handleEndbossCollision(enemy) {
     */
     checkCoinCollision(index) {
         this.statusBarCoin.incrementCount();
-    
+
         // Create a new Audio instance and play the sound
         const coinSound = new Audio(this.character.collect_coin.src);
         coinSound.play();
         coinSound.playbackRate = 1;
         coinSound.volume = 0.4;
-    
+
         this.level.enemies.splice(index, 1);
         if (this.statusBarCoin.count % 3 === 0) {
             this.statusBarBottle.incrementCount();
         }
     }
-    
+
 
     /**
     Increments the bottle count and removes the bottle.
@@ -339,15 +382,15 @@ handleEndbossCollision(enemy) {
     */
     checkBottleCollision(index) {
         this.statusBarBottle.incrementCount();
-    
+
         // Create a new Audio instance and play the sound
         const bottleSound = new Audio(this.character.collect_bottle.src);
         bottleSound.play();
-    
+
         this.level.enemies.splice(index, 1);
     }
-    
-    
+
+
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -364,7 +407,18 @@ handleEndbossCollision(enemy) {
         if (distanceTraveled >= 6400) {
             const endboss = this.level.enemies.find(enemy => enemy.type === 'endboss');
             if (endboss && !endboss.isAlert) {
+                if (bgMusic) {
+                    bgMusic.pause(); // Stop the background music
+                }
+                if (!this.endbossMusicPlayed) {
+                    this.endbossMusic.play();
+                    this.endbossMusicPlayed = true;
+                }
                 endboss.isAlert = true;
+                setTimeout(() => {
+                    endboss.resumeMoving();
+                    endboss.moveLeft();
+                }, 3000);
             }
         }
 

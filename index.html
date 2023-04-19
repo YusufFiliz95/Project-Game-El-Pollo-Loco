@@ -24,12 +24,20 @@
     <script src="levels/level1.js"></script>
     <script src="js/game.js"></script>
 </head>
-<body onload="init()">
+<body>
     
     <div class="background-image">
         <h1>EL POLLO LOCO</h1>
     </div>
-    <canvas id="canvas" width="720" height="480"></canvas>
-
+    <canvas id="canvas" width="800" height="480" class="d-none"></canvas>
+    <div class="menu-container-section" id="gamemenu">
+        <div>
+            <button class="start" onclick="startGame()">START</button>
+        </div>
+        <div>
+            <button class="settings-icon sound-off"></button>
+            <button onclick="openSettings()" class="settings-icon setting"></button>
+        </div>
+    </div>
 </body>
 </html>
