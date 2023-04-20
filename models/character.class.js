@@ -85,6 +85,7 @@ class Character extends MovableObject {
         this.applyHorizontalDamping();
         this.applyGravity();
         this.animate();
+        this.gameOverTriggered = false; 
     }
 
     handleCollision(item) {
@@ -150,14 +151,14 @@ class Character extends MovableObject {
             let newTimeout = null;
 
             if (this.isDead()) {
-                if (!this.deadOnce) {
+                if (!this.deadOnce && !this.gameOverTriggered) {
                     newAnimation = this.IMAGES_DEAD;
                     newTimeout = 100;
                     this.is_dead.play();
                     setTimeout(() => {
-                        bgMusic.pause(); // Stop the background music
-                        gameOver(); // Call the gameOver function
+                        gameOver();
                     }, 1000);
+                    this.gameOverTriggered = true;
                 }
             } else if (this.isHurt()) {
                 newAnimation = this.IMAGES_HURT;
@@ -182,7 +183,9 @@ class Character extends MovableObject {
                     clearTimeout(currentTimeout);
                 }
                 const playCurrentAnimation = () => {
-                    this.playAnimation(currentAnimation);
+                    if (currentAnimation) { // Add this line
+                        this.playAnimation(currentAnimation);
+                    } // Add this line
                     currentTimeout = setTimeout(playCurrentAnimation, newTimeout);
                 };
                 playCurrentAnimation();

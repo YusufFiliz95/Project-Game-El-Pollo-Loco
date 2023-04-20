@@ -13,6 +13,7 @@ class World {
     gameStarted = false;
     startedMoving = false;
     endbossMusicPlayed = false;
+    static isSoundMuted = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -27,6 +28,15 @@ class World {
         this.endbossMusic.loop = true;
         this.endbossMusic.volume = 0.3;
     }
+
+    toggleEndbossMusicMute() {
+        if (this.endbossMusic) {
+            World.isSoundMuted = !World.isSoundMuted;
+            this.endbossMusic.muted = World.isSoundMuted;
+            this.endbossMusic.volume = World.isSoundMuted ? 0 : 1.0;
+        }
+    }
+
 
     setWorld() {
         this.character.world = this;

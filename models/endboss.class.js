@@ -11,7 +11,7 @@ class Endboss extends MovableObject {
     hurt = false;
     dead = false;
     hits = 0;
-    
+
 
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -76,6 +76,7 @@ class Endboss extends MovableObject {
         this.isAlert = false;
         this.movingLeft = false;
         this.speed = 0.8;
+        this.youWinTriggered = false;
     }
 
     animate() {
@@ -108,42 +109,46 @@ class Endboss extends MovableObject {
                 this.playAnimation(this.IMAGES_HURT, true);
             }
         }, 100);
-
         setInterval(() => {
             if (this.dead) {
                 this.loadImage('img/4_enemie_boss_chicken/5_dead/G26.png');
-                setTimeout(() => {
-                    bgMusic.pause(); // Stop the background music
-                    gameOver(); // Call the gameOver function
-                }, 1000);
+                if (!this.youWinTriggered) {
+                    setTimeout(() => {
+                        bgMusic.pause();
+                        youWin();
+                    }, 1000);
+                    this.youWinTriggered = true;
+                }
             }
         }, 200);
-    }        
+        
+
+    }
 
     resetAnimation() {
         this.currentImage = 0;
-        this.loadImages(this.IMAGES_ATTACKING); 
+        this.loadImages(this.IMAGES_ATTACKING);
     }
 
-moveLeft() {
-    if (!this.movingLeft && !this.standing) {
-        this.movingLeft = true;
-        this.walking = true;
-        this.standing = true;
+    moveLeft() {
+        if (!this.movingLeft && !this.standing) {
+            this.movingLeft = true;
+            this.walking = true;
+            this.standing = true;
 
-        const move = () => {
-            if (this.isAlert && this.movingLeft) {
-                this.x -= this.speed;
-                requestAnimationFrame(move);
-            } else {
-                this.movingLeft = false;
-                this.walking = false;
-            }
-        };
+            const move = () => {
+                if (this.isAlert && this.movingLeft) {
+                    this.x -= this.speed;
+                    requestAnimationFrame(move);
+                } else {
+                    this.movingLeft = false;
+                    this.walking = false;
+                }
+            };
 
-        requestAnimationFrame(move);
+            requestAnimationFrame(move);
+        }
     }
-}
 
     stopMoving() {
         this.movingLeft = false;

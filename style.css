@@ -60,6 +60,13 @@ body {
     background-repeat: no-repeat;
 }
 
+.sound-on{
+    background-image: url(img/icons/sound-on.svg);
+    background-size: 40px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .sound-off{
     background-image: url(img/icons/sound-off.svg);
     background-size: 40px;
@@ -145,7 +152,7 @@ h1 {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: -110px;
+    margin-top: -90px;
 }
 
 .gameover-win button{
