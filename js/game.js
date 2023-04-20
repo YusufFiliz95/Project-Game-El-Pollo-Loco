@@ -146,7 +146,7 @@ function closeSettings() {
             <button class="start" onclick="startGame()">START</button>
         </div>
         <div>
-            <button class="settings-icon sound-off"></button>
+        <button class="settings-icon sound-on" onclick="toggleSound()" id="soundbutton"></button>
             <button onclick="openSettings()" class="settings-icon setting"></button>
         </div>
     </div>
