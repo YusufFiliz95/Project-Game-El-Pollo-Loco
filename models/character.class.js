@@ -4,7 +4,7 @@ class Character extends MovableObject {
     width = 110;
     height = 220;
     y = -50; // 135
-    speed = 50; //5
+    speed = 5; //5
     isJumping = false;
     startPositionX = this.x;
 
@@ -89,6 +89,14 @@ class Character extends MovableObject {
         this.gameOverTriggered = false; 
     }
 
+/**
+ * The function handles collisions between the player and items, incrementing the collected coins or
+ * bottles and removing the item accordingly.
+ * @param item - The parameter "item" is an object that represents an item in the game that the
+ * player's character can collide with. The function "handleCollision" is called when the player's
+ * character collides with an item, and it checks the type of the item (whether it is a coin or a
+ * bottle
+ */
     handleCollision(item) {
         if (this.hitTest(item)) {
             if (item.type === 'coin') {
@@ -101,6 +109,10 @@ class Character extends MovableObject {
         }
     }
 
+/**
+ * The function animates the movement and actions of a character in a game, including walking, jumping,
+ * and playing different animations based on the character's state.
+ */
 
     animate() {
 
@@ -195,6 +207,10 @@ class Character extends MovableObject {
         setInterval(updateAnimation, 55);
     }
 
+/**
+ * The "jump" function sets the speed of an object to 40 and plays a sound if the object is not above
+ * the ground.
+ */
     jump() {
         if (!this.isAboveGround()) {
             this.speedY = 40;
@@ -202,8 +218,12 @@ class Character extends MovableObject {
         }
     }
 
+/**
+ * The function decreases the health of an object and changes its speed when hit by an end boss in a
+ * game.
+ */
     hitByEndboss() {
-        this.speedX = -35;
+        this.speedX = -45;
         this.speedY = 40;
         this.health -= 20;
         if (this.health < 0) {
@@ -213,24 +233,38 @@ class Character extends MovableObject {
         }
     }
 
+/**
+ * The function sets the position and speed of an object when it collides with an enemy.
+ * @param enemy - The "enemy" parameter is likely an object representing an enemy or obstacle in a
+ * game. The function "bounceOnCollision" is likely called when the player's character collides with
+ * the enemy, and it sets the player's position and speed to simulate a bouncing effect. Specifically,
+ * it sets the player
+ */
     bounceOnCollision(enemy) {
         this.y = enemy.y - this.height;
         this.speedY = 40;
     }
 
+/**
+ * The function calculates the absolute distance traveled by an object in the x-axis from its starting
+ * position.
+ * @returns The `getDistanceTraveled()` method is returning the absolute value of the difference
+ * between the current `x` position and the starting position `startPositionX`. This represents the
+ * distance traveled by the object along the x-axis.
+ */
     getDistanceTraveled() {
         return Math.abs(this.x - this.startPositionX);
     }
 
+/**
+ * The function applies gravity to an object's movement in a game by adjusting its position and speed.
+ */
     applyGravity() {
         setInterval(() => {
             this.x += this.speedX;
-
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
-
-
                 if (this.y < this.maxHeight) {
                     this.speedY = 0;
                     this.y = this.maxHeight;
@@ -239,6 +273,9 @@ class Character extends MovableObject {
         }, 40);
     }
 
+/**
+ * The function applies horizontal damping to reduce the speed of an object over time.
+ */
     applyHorizontalDamping() {
         setInterval(() => {
             if (Math.abs(this.speedX) > 0.1) {
@@ -249,5 +286,8 @@ class Character extends MovableObject {
         }, 40);
     }
 
+/* Creating a new instance of the `Hitbox` class with the parameters `85`, `25`, `10`, and `20`, and
+assigning it to the `hitbox` property of the `Character` class. This `Hitbox` instance represents
+the hitbox or collision box of the character in the game. */
     hitbox = new Hitbox(85, 25, 10, 20);
 }

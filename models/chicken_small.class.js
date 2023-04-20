@@ -22,6 +22,13 @@ class Smallchicken extends MovableObject {
         this.speed = 0.15 + Math.random() * 0.4;
     }
 
+/**
+ * This function generates a random x position for a chicken game object with certain constraints.
+ * @returns a randomly generated x-position for a small chicken object in a game, taking into account
+ * the minimum distance between chickens, the minimum starting position, and the maximum range. If the
+ * new x-position exceeds the maximum range, the function returns the last chicken's x-position
+ * instead.
+ */
     static generateXPosition() {
         const minDistance = 500;
         const minStartPosition = 500;
@@ -39,6 +46,9 @@ class Smallchicken extends MovableObject {
         }
     }
 
+/**
+ * The function animates the character by moving it left and playing a walking animation.
+ */
     animate() {
         if (world && world.isGameStarted()) {
             this.moveLeft();
@@ -50,5 +60,9 @@ class Smallchicken extends MovableObject {
         }, 100);
     }
 
+/* Creating a new Hitbox object with specific parameters and assigning it to the `hitbox` property of
+the `Smallchicken` class. The `Hitbox` object is used to define the collision detection area for the
+chicken game object. The parameters passed to the `Hitbox` constructor are the x-offset, y-offset,
+width, and height of the hitbox. */
     hitbox = new Hitbox(12, 1, 1, 1);
 }

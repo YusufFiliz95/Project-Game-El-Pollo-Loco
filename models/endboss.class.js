@@ -79,6 +79,9 @@ class Endboss extends MovableObject {
         this.youWinTriggered = false;
     }
 
+/**
+ * The function sets intervals for different animations based on the state of the character.
+ */
     animate() {
         setInterval(() => {
             if (!this.isAlert) {
@@ -122,14 +125,19 @@ class Endboss extends MovableObject {
             }
         }, 200);
         
-
     }
 
+/**
+ * The function resets the animation by setting the current image to 0 and loading attacking images.
+ */
     resetAnimation() {
         this.currentImage = 0;
         this.loadImages(this.IMAGES_ATTACKING);
     }
 
+/**
+ * This function moves an object to the left with animation.
+ */
     moveLeft() {
         if (!this.movingLeft && !this.standing) {
             this.movingLeft = true;
@@ -150,15 +158,24 @@ class Endboss extends MovableObject {
         }
     }
 
+/**
+ * The function stops the movement of an object to the left and sets it to a standing position.
+ */
     stopMoving() {
         this.movingLeft = false;
         this.standing = true;
     }
 
+/**
+ * The function `resumeMoving()` sets the `standing` property to `false`.
+ */
     resumeMoving() {
         this.standing = false;
     }
 
 
+/* Creating a new instance of the `Hitbox` class with the parameters `80`, `40`, `10`, and `40`, and
+assigning it to the `hitbox` property of the `Endboss` class. This hitbox is used to detect
+collisions with other objects in the game. */
     hitbox = new Hitbox(80, 40, 10, 40);
 }

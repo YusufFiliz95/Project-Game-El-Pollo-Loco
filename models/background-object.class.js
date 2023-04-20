@@ -1,3 +1,5 @@
+/* The BackgroundObject class extends the MovableObject class and sets the width, height, x, and y
+properties for a background image. */
 class BackgroundObject extends MovableObject{
 
     width = 720;

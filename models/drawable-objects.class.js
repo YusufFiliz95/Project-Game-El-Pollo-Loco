@@ -7,12 +7,21 @@ class DrawableObject {
     height = 150;
     width = 100;
 
-    // loadImage('img/test.png)
+
+/**
+ * The function loads an image from a specified path.
+ * @param path - The path parameter is a string that represents the URL or file path of the image that
+ * needs to be loaded.
+ */
     loadImage(path) {
         this.img = new Image(); // this.img = document.getElementById('image') <img id="image"src="">
         this.img.src = path;
     }
 
+/**
+ * This function draws an image on a canvas context and, if a hitbox is defined, also draws the hitbox.
+ * @param ctx - The canvas context on which the image and hitbox will be drawn.
+ */
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     
@@ -21,10 +30,10 @@ class DrawableObject {
         }
     }
 
-    /**
-    * 
-    * @param {Array} arr ['img/image1.png', 'img/image2.png', ...] 
-    */
+/**
+ * The function loads images from an array and caches them.
+ * @param arr - An array of image file paths that need to be loaded.
+ */
     loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();

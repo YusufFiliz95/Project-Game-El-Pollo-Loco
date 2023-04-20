@@ -63,10 +63,20 @@ class StatusBarBottle extends DrawableObject {
         this.id = id;
     }
 
+/**
+ * The function increments a count variable by 1.
+ */
     incrementCount() {
         this.count++;
     }
 
+/**
+ * This function draws a text on a canvas context with a specific font, color, and position.
+ * @param ctx - ctx stands for "context" and refers to the canvas context on which the drawing will be
+ * performed. It is typically obtained by calling the getContext() method on a canvas element. The
+ * context provides methods and properties for drawing shapes, text, images, and other graphical
+ * elements on the canvas.
+ */
     draw(ctx) {
         super.draw(ctx);
         ctx.font = '30px zabars';
@@ -97,10 +107,20 @@ class StatusBarCoin extends DrawableObject {
         this.id = id;
     }
 
+/**
+ * The function increments a count variable by 1.
+ */
     incrementCount() {
         this.count++;
     }
 
+/**
+ * This function draws a text on a canvas context with a specific font, color, and position.
+ * @param ctx - ctx stands for "context" and refers to the canvas context on which the drawing will be
+ * performed. It is typically obtained by calling the getContext() method on a canvas element. The
+ * context provides methods and properties for drawing shapes, text, images, and other graphical
+ * elements on the canvas.
+ */
     draw(ctx) {
         super.draw(ctx);
         ctx.font = '30px zabars';

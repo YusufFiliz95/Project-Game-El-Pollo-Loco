@@ -29,6 +29,10 @@ class World {
         this.endbossMusic.volume = 0.3;
     }
 
+/**
+ * The function toggles the mute state and volume of the endbossMusic object based on the current state
+ * of the World's sound mute flag.
+ */
     toggleEndbossMusicMute() {
         if (this.endbossMusic) {
             World.isSoundMuted = !World.isSoundMuted;
@@ -37,15 +41,24 @@ class World {
         }
     }
 
-
+/**
+ * The function sets the world property of a character object to the current object.
+ */
     setWorld() {
         this.character.world = this;
     }
 
+/**
+ * The function returns a boolean value indicating whether the game has started or not.
+ * @returns The method `isGameStarted()` is returning the value of the `gameStarted` property.
+ */
     isGameStarted() {
         return this.gameStarted;
     }
 
+/**
+ * The function runs two checks repeatedly every 10 milliseconds.
+ */
     run() {
         setInterval(() => {
             this.checkCollisions();
@@ -53,7 +66,10 @@ class World {
         }, 10);
     }
 
-
+/**
+ * The function checks if throwable objects can be thrown and adds them to an array if possible based
+ * on keyboard inputs.
+ */
     checkThrowableObjects() {
         const throwBottleIfPossible = () => {
             if (this.statusBarBottle.count > 0) {
@@ -404,6 +420,10 @@ class World {
 
 
 
+/**
+ * This function draws the game objects on the canvas and handles the movement of the end boss when the
+ * player has traveled a certain distance.
+ */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -455,12 +475,21 @@ class World {
         });
     }
 
+/**
+ * This function adds objects to a map by iterating through an array of objects and calling the
+ * addToMap method for each object.
+ * @param objects - An array of objects that need to be added to a map.
+ */
     addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o);
         });
     }
 
+/**
+ * The function adds a movable object to a map and flips its image if necessary.
+ * @param mo - movable object, an object that can be moved or animated on the canvas.
+ */
     addToMap(mo) { // mo = movable object
         if (mo.otherDirection) {
             this.flipImage(mo)
@@ -472,6 +501,12 @@ class World {
         }
     }
 
+/**
+ * The flipImage function flips an image horizontally using the canvas context in JavaScript.
+ * @param mo - It is likely that "mo" is an object that represents an image or a graphical element. The
+ * function "flipImage" is using the Canvas API to flip the image horizontally by translating the
+ * canvas context to the right edge of the image, scaling it by -1 on the x-axis, and then
+ */
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
@@ -479,6 +514,12 @@ class World {
         mo.x = mo.x * -1;
     }
 
+/**
+ * The function flips an image back horizontally and restores the canvas context.
+ * @param mo - It seems that "mo" is an object that has an "x" property, which is being modified in the
+ * function. The function also uses "this.ctx.restore()", which suggests that it is part of a larger
+ * object or class that has a canvas context. Without more context, it's difficult to
+ */
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();

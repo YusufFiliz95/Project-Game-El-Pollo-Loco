@@ -24,6 +24,13 @@ class Keyboard {
         });
     }
 
+/**
+ * The function handles keydown events and sets corresponding boolean values to true based on the key
+ * pressed.
+ * @param event - The event parameter is an object that contains information about the event that
+ * occurred, such as the type of event, the target element, and any additional data related to the
+ * event. In this case, it is used to detect which key was pressed by the user.
+ */
     handleKeyDown(event) {
         if(event.keyCode == 37 || event.key == 'a') {
             this.LEFT = true;
@@ -51,6 +58,14 @@ class Keyboard {
         }
     }
 
+/**
+ * The function handles key up events and updates corresponding boolean variables and keyReleased
+ * object properties.
+ * @param event - The event parameter is an object that contains information about the event that
+ * occurred, such as the type of event, the target element, and any additional data related to the
+ * event. In this case, it is used to detect which key was released and update the corresponding
+ * boolean variables and keyReleased object.
+ */
     handleKeyUp(event) {
         if(event.keyCode == 37 || event.key == 'a') {
             this.LEFT = false;

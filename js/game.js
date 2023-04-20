@@ -7,6 +7,10 @@ let isSoundMuted = false;
 let keyboard = new Keyboard();
 
 
+/**
+ * The function starts the game by initializing the canvas, creating a new world, and animating all
+ * chickens and small chickens in the level.
+ */
 function startGame() {
     canvas = document.getElementById('canvas');
     document.getElementById('gamemenu').classList.add('d-none');
@@ -22,6 +26,9 @@ function startGame() {
     playMusic();
 }
 
+/**
+ * The function plays a background music with adjustable volume and mute settings.
+ */
 function playMusic() {
     bgMusic = new Audio('audio/soundtrack.mp3');
     bgMusic.loop = true;
@@ -30,6 +37,10 @@ function playMusic() {
     bgMusic.play();
 }
 
+/**
+ * The function toggles the sound on and off for all audio elements on the page and also specifically
+ * mutes or unmutes the endboss music.
+ */
 function toggleSound() {
     const soundButton = document.getElementById('soundbutton');
     const isSoundOn = soundButton.classList.contains('sound-on');
@@ -60,14 +71,10 @@ function toggleSound() {
     }
 }
 
-function enterFullscreen() {
-    document.documentElement.requestFullscreen();
-}
-
-function exitFullscreen() {
-    document.exitFullscreen();
-}
-
+/**
+ * The function displays a "you win" message and image while playing a victory sound effect and pausing
+ * any background music.
+ */
 function youWin() {
     canvas.classList.add('d-none');
     const gameOverWin = document.getElementById('gameoverwinimage');
@@ -80,6 +87,9 @@ function youWin() {
     }
 }
 
+/**
+ * The function displays a game over screen and plays a sound effect when called.
+ */
 function gameOver() {
     canvas.classList.add('d-none');
     const gameOverWin = document.getElementById('gameoverwinimage');
@@ -92,10 +102,17 @@ function gameOver() {
     }
 }
 
+/**
+ * The function redirects the user to the "index.html" page.
+ */
 function goToMenu() {
     window.location.href = "index.html";
 }
 
+/**
+ * The function opens a settings menu with instructions on how to move, jump, and throw a bottle in a
+ * game.
+ */
 function openSettings() {
     const gameMenu = document.getElementById('gamemenu');
     gameMenu.innerHTML = /*html*/ `
@@ -118,12 +135,15 @@ function openSettings() {
     `;
 }
 
+/**
+ * The function replaces the HTML content of an element with a game menu and a button to open settings.
+ */
 function closeSettings() {
     const gameMenu = document.getElementById('gamemenu');
     gameMenu.innerHTML = /*html*/ `
         <div class="menu-container-section" id="gamemenu">
         <div>
-            <button class="start">START</button>
+            <button class="start" onclick="startGame()">START</button>
         </div>
         <div>
             <button class="settings-icon sound-off"></button>
@@ -133,6 +153,11 @@ function closeSettings() {
     `;
 }
 
+/* This code adds an event listener to the window object that listens for keydown events. When a
+keydown event occurs, the function inside the listener is executed. This function checks which key
+was pressed by checking the keyCode or key property of the event object. Depending on the key
+pressed, it sets the corresponding property of the keyboard object to true. This allows the game to
+detect which keys are currently being pressed and respond accordingly. */
 window.addEventListener('keydown', (event) => {
     if (event.keyCode == 37 || event.key == 'a') {
         keyboard.LEFT = true;
@@ -167,6 +192,11 @@ window.addEventListener('keydown', (event) => {
     }
 })
 
+/* This code adds an event listener to the window object that listens for keyup events. When a keyup
+event occurs, the function inside the listener is executed. This function checks which key was
+released by checking the keyCode or key property of the event object. Depending on the key released,
+it sets the corresponding property of the keyboard object to false. This allows the game to detect
+which keys are no longer being pressed and respond accordingly. */
 window.addEventListener('keyup', (event) => {
     if (event.keyCode == 37 || event.key == 'a') {
         keyboard.LEFT = false;

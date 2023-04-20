@@ -28,6 +28,9 @@ class ThrowableObject extends MovableObject {
         this.animate();
     }
 
+/**
+ * The function animates a bottle by spinning and breaking it at different intervals.
+ */
     animate() {
         this.speedY = 35;
         this.applyGravity();
@@ -56,6 +59,9 @@ class ThrowableObject extends MovableObject {
     
     
 
+/* Creating a new instance of the `Hitbox` class with the parameters `(1, 1, 10, 1)` and assigning it
+to the `hitbox` property of the `ThrowableObject` class. This hitbox is used to detect collisions
+with other objects in the game. */
     hitbox = new Hitbox(1, 1, 10, 1);
 }
 

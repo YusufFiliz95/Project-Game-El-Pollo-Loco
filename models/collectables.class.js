@@ -60,10 +60,31 @@ class Bottle extends MovableObject {
     hitbox = new Hitbox(10, 12, 10, 20);
 }
 
+/**
+ * The function returns a random integer between a minimum and maximum value.
+ * @param min - The minimum value that the random integer can be.
+ * @param max - The maximum value that the random integer can be (inclusive).
+ * @returns a random integer between the minimum and maximum values (inclusive) passed as arguments.
+ */
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+/**
+ * The function creates a random pattern using a set of patterns, ensuring a minimum distance between
+ * patterns and returning the last used random index and x-coordinate.
+ * @param patterns - an array of functions that generate patterns
+ * @param lastRandomIndex - The index of the last pattern that was randomly selected.
+ * @param lastXCoordinate - The x-coordinate of the last pattern created. It is used to ensure that the
+ * new pattern is created with a minimum distance between the previous pattern.
+ * @param minDistanceBetweenPatterns - The minimum distance between the x-coordinates of two
+ * consecutive patterns.
+ * @param maxRange - The maximum value for the x-coordinate of the pattern. Once the lastXCoordinate
+ * exceeds this value, the function will stop generating new patterns and return an empty result.
+ * @returns An object with three properties: "result" which contains an array of the new pattern
+ * generated, "newLastRandomIndex" which contains the index of the pattern used to generate the new
+ * pattern, and "newLastXCoordinate" which contains the x-coordinate of the new pattern.
+ */
 function createRandomPattern(patterns, lastRandomIndex, lastXCoordinate, minDistanceBetweenPatterns, maxRange) {
     if (lastXCoordinate >= maxRange) {
         return { result: [], newLastRandomIndex: lastRandomIndex, newLastXCoordinate: lastXCoordinate };
@@ -177,6 +198,12 @@ const minDistanceBetweenBottlePatterns = 200;
 const maxCoinRange = 5600;
 const maxBottleRange = 5600;
 
+/**
+ * The function creates an alternating pattern of randomly generated coin and bottle items with
+ * specified distances between them.
+ * @returns The function `createAlternatingPattern` returns an array of items that alternates between
+ * randomly generated coin patterns and bottle patterns.
+ */
 function createAlternatingPattern() {
     let items = [];
 
