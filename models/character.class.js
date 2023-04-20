@@ -74,7 +74,21 @@ class Character extends MovableObject {
     chicken_dead = new Audio('audio/chicken.mp3');
     smallChicken_dead = new Audio('audio/smallchicken.mp3');
 
-
+    muteAllSounds() {
+        this.walking_sound.muted = true;
+        this.jumping_sound.muted = true;
+        this.is_hurt.muted = true;
+        this.is_dead.muted = true;
+        this.collect_coin.muted = true;
+        this.collect_bottle.muted = true;
+        this.bottle_breaking.muted = true;
+        this.bottle_throwing.muted = true;
+        this.endboss_hurt.muted = true;
+        this.endboss_attack.muted = true;
+        this.endboss_dead.muted = true;
+        this.chicken_dead.muted = true;
+        this.smallChicken_dead.muted = true;
+    }
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
@@ -169,6 +183,9 @@ class Character extends MovableObject {
                     newTimeout = 100;
                     this.is_dead.play();
                     setTimeout(() => {
+                        if (this instanceof Character) {
+                            this.muteAllSounds();
+                        }
                         gameOver();
                     }, 1000);
                     this.gameOverTriggered = true;
