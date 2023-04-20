@@ -52,21 +52,27 @@ class MovableObject extends DrawableObject {
  * @returns The function `isColliding` is returning a boolean value. It returns `true` if the two
  * objects being compared are colliding, and `false` if they are not colliding.
  */
-    isColliding(mo) {
-        if (this.hitbox && mo.hitbox) {
-            return this.hitbox.isColliding(
-                this.x, this.y, this.width, this.height,
-                mo.x, mo.y, mo.width, mo.height,
-                this.hitbox.marginTop, this.hitbox.marginRight, this.hitbox.marginBottom, this.hitbox.marginLeft,
-                mo.hitbox.marginTop, mo.hitbox.marginRight, mo.hitbox.marginBottom, mo.hitbox.marginLeft
-            );
-        } else {
-            return this.x + this.width > mo.x &&
-                this.y + this.height > mo.y &&
-                this.x < mo.x + mo.width &&
-                this.y < mo.y + mo.height;
-        }
+isColliding(mo) {
+    // Überprüfen, ob einer der beiden Charaktere tot ist
+    if (this.isDead()) {
+        return false;
     }
+
+    if (this.hitbox && mo.hitbox) {
+        return this.hitbox.isColliding(
+            this.x, this.y, this.width, this.height,
+            mo.x, mo.y, mo.width, mo.height,
+            this.hitbox.marginTop, this.hitbox.marginRight, this.hitbox.marginBottom, this.hitbox.marginLeft,
+            mo.hitbox.marginTop, mo.hitbox.marginRight, mo.hitbox.marginBottom, mo.hitbox.marginLeft
+        );
+    } else {
+        return this.x + this.width > mo.x &&
+            this.y + this.height > mo.y &&
+            this.x < mo.x + mo.width &&
+            this.y < mo.y + mo.height;
+    }
+}
+
     
 
 /**

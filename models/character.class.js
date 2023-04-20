@@ -4,7 +4,7 @@ class Character extends MovableObject {
     width = 110;
     height = 220;
     y = -50; // 135
-    speed = 5; //5
+    speed = 50; //5
     isJumping = false;
     startPositionX = this.x;
 
