@@ -223,7 +223,7 @@ class Character extends MovableObject {
  * game.
  */
     hitByEndboss() {
-        this.speedX = -45;
+        this.speedX = -80;
         this.speedY = 40;
         this.health -= 20;
         if (this.health < 0) {
