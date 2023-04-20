@@ -60,6 +60,13 @@ function toggleSound() {
     }
 }
 
+function enterFullscreen() {
+    document.documentElement.requestFullscreen();
+}
+
+function exitFullscreen() {
+    document.exitFullscreen();
+}
 
 function youWin() {
     canvas.classList.add('d-none');

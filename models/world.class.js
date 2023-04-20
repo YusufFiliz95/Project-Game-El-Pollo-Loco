@@ -60,6 +60,8 @@ class World {
                 this.statusBarBottle.decrementCount();
                 let bottle = new ThrowableObject(this.character.x + 60, this.character.y + 40);
                 this.throwableObjects.push(bottle);
+                const throwingSound = new Audio(this.character.bottle_throwing.src);
+                throwingSound.play();
             }
         };
 

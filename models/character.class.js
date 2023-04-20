@@ -67,6 +67,7 @@ class Character extends MovableObject {
     collect_coin = new Audio('audio/coin.mp3');
     collect_bottle = new Audio('audio/bottle.mp3');
     bottle_breaking = new Audio('audio/glass.mp3');
+    bottle_throwing = new Audio('audio/throw.mp3');
     endboss_hurt = new Audio('audio/endboss_hurt.mp3');
     endboss_attack = new Audio('audio/endboss_attack.mp3');
     endboss_dead = new Audio('audio/endboss_dead.mp3');
