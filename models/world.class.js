@@ -22,9 +22,23 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+        this.bottle_breaking = window.audio.bottle_breaking;
+        this.bottle_throwing = window.audio.bottle_throwing;
+        this.chicken_dead = window.audio.chicken_dead;
+        this.collect_bottle = window.audio.collect_bottle;
+        this.collect_coin = window.audio.collect_coin;
+        this.endboss_attack = window.audio.endboss_attack;
+        this.endboss_dead = window.audio.endboss_dead;
+        this.endboss_hurt = window.audio.endboss_hurt;
+        this.is_dead = window.audio.is_dead;
+        this.is_hurt = window.audio.is_hurt;
+        this.jumping_sound = window.audio.jumping_sound;
+        this.smallChicken_dead = window.audio.smallChicken_dead;
+        this.throw_bottle = window.audio.throw_bottle;
+        this.walking_sound = window.audio.walking_sound;
         this.lastHitTime = 0;
         this.gameStarted = true;
-        this.endbossMusic = new Audio('audio/endbosssound.mp3');
+        this.endbossMusic = window.audio.endbossMusic;
         this.endbossMusic.loop = true;
         this.endbossMusic.volume = 0.3;
     }
@@ -76,8 +90,7 @@ class World {
                 this.statusBarBottle.decrementCount();
                 let bottle = new ThrowableObject(this.character.x + 60, this.character.y + 40);
                 this.throwableObjects.push(bottle);
-                const throwingSound = new Audio(this.character.bottle_throwing.src);
-                throwingSound.play();
+                this.throw_bottle.play();
             }
         };
 
@@ -194,8 +207,7 @@ class World {
         throwableObject.isBroken = true;
         throwableObject.currentImage = 0;
         throwableObject.loadImages(throwableObject.IMAGES_BOTTLE_BREAKING);
-        const breakingSound = new Audio(this.character.bottle_breaking.src);
-        breakingSound.play();
+        this.bottle_breaking.play();
     }
 
     /**
@@ -392,10 +404,9 @@ class World {
         this.statusBarCoin.incrementCount();
 
         // Create a new Audio instance and play the sound
-        const coinSound = new Audio(this.character.collect_coin.src);
-        coinSound.play();
-        coinSound.playbackRate = 1;
-        coinSound.volume = 0.4;
+        this.collect_coin.play();
+        this.collect_coin.playbackRate = 1;
+        this.collect_coin.volume = 0.4;
 
         this.level.enemies.splice(index, 1);
         if (this.statusBarCoin.count % 3 === 0) {
@@ -412,8 +423,7 @@ class World {
         this.statusBarBottle.incrementCount();
 
         // Create a new Audio instance and play the sound
-        const bottleSound = new Audio(this.character.collect_bottle.src);
-        bottleSound.play();
+        this.collect_bottle.play();
 
         this.level.enemies.splice(index, 1);
     }

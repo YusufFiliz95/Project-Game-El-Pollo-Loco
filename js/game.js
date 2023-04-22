@@ -1,10 +1,7 @@
 let canvas;
 let world;
-let bgMusic;
-let game_over = new Audio('audio/game_over.mp3');
-let you_win = new Audio('audio/win.mp3');
-let isSoundMuted = false;
 let keyboard = new Keyboard();
+let isMuted = false;
 
 
 /**
@@ -30,10 +27,9 @@ function startGame() {
  * The function plays a background music with adjustable volume and mute settings.
  */
 function playMusic() {
-    bgMusic = new Audio('audio/soundtrack.mp3');
+    bgMusic = window.audio.bg_music;
     bgMusic.loop = true;
-    bgMusic.volume = isSoundMuted ? 0 : 0.3;
-    bgMusic.muted = isSoundMuted;
+    bgMusic.volume = 0.3;
     bgMusic.play();
 }
 
@@ -44,64 +40,50 @@ function playMusic() {
 function toggleSound() {
     const soundButton = document.getElementById('soundbutton');
     const isSoundOn = soundButton.classList.contains('sound-on');
-    const allAudioElements = document.querySelectorAll('audio');
-
-    isSoundMuted = isSoundOn;
+    isSoundMuted = !isSoundOn;
 
     if (isSoundOn) {
         soundButton.classList.remove('sound-on');
         soundButton.classList.add('sound-off');
-        character.muteAllSound();
-        allAudioElements.forEach(audio => {
-            audio.muted = true;
-            audio.volume = 0;
-        });
+        window.muteAudio();
     } else {
         soundButton.classList.remove('sound-off');
         soundButton.classList.add('sound-on');
-        allAudioElements.forEach(audio => {
-            audio.muted = false;
-            audio.volume = 1.0;
-        });
+        window.unmuteAudio();
     }
 
-    // Stummschalten der Endboss-Musik direkt
-    if (world && world.endbossMusic) {
-        world.endbossMusic.muted = isSoundMuted;
-        world.endbossMusic.volume = isSoundMuted ? 0 : 1.0;
-    }
 }
 
 /**
- * The function displays a "you win" message and image while playing a victory sound effect and pausing
- * any background music.
+ * The function displays a "you win" message and image, mutes all sounds except for the "you win"
+ * sound, and plays the "you win" sound if not muted.
  */
 function youWin() {
     canvas.classList.add('d-none');
     const gameOverWin = document.getElementById('gameoverwinimage');
     gameOverWin.classList.remove('d-none');
     document.getElementById('gameoverwin').src = "img/9_intro_outro_screens/game_over/game over.png";
-    bgMusic.pause();
-    you_win.play();
-    if (world.endbossMusic) {
-        world.endbossMusic.pause();
+    muteAllExcept('you_win');
+    if (!isMuted) {
+        window.audio.you_win.play();
     }
 }
 
 /**
- * The function displays a game over screen and plays a sound effect when called.
+ * The function hides the canvas, displays a game over image, mutes all sounds except for the game over
+ * sound, and plays the game over sound if not muted.
  */
 function gameOver() {
     canvas.classList.add('d-none');
     const gameOverWin = document.getElementById('gameoverwinimage');
     gameOverWin.classList.remove('d-none');
     document.getElementById('gameoverwin').src = "img/9_intro_outro_screens/game_over/you lost.png";
-    bgMusic.pause();
-    game_over.play();
-    if (world.endbossMusic) {
-        world.endbossMusic.pause();
+    muteAllExcept('game_over');
+    if (!isMuted) {
+        window.audio.game_over.play();
     }
 }
+
 
 /**
  * The function redirects the user to the "index.html" page.

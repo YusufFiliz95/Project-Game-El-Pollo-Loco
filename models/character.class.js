@@ -62,20 +62,21 @@ class Character extends MovableObject {
     world;
 
     muteAllSounds() {
-        this.walking_sound.muted = true;
-        this.jumping_sound.muted = true;
-        this.is_hurt.muted = true;
-        this.is_dead.muted = true;
-        this.collect_coin.muted = true;
-        this.collect_bottle.muted = true;
-        this.bottle_breaking.muted = true;
-        this.bottle_throwing.muted = true;
-        this.endboss_hurt.muted = true;
-        this.endboss_attack.muted = true;
-        this.endboss_dead.muted = true;
-        this.chicken_dead.muted = true;
-        this.smallChicken_dead.muted = true;
+        this.walking_sound.pause();
+        this.jumping_sound.pause();
+        this.is_hurt.pause();
+        this.is_dead.pause();
+        this.collect_coin.pause();
+        this.collect_bottle.pause();
+        this.bottle_breaking.pause();
+        this.bottle_throwing.pause();
+        this.endboss_hurt.pause();
+        this.endboss_attack.pause();
+        this.endboss_dead.pause();
+        this.chicken_dead.pause();
+        this.smallChicken_dead.pause();
     }
+
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
@@ -88,29 +89,29 @@ class Character extends MovableObject {
         this.applyGravity();
         this.animate();
         this.gameOverTriggered = false;
-        this.walking_sound = new Audio('audio/running.mp3');
-        this.jumping_sound = new Audio('audio/jump.mp3');
-        this.is_hurt = new Audio('audio/hurt.mp3');
-        this.is_dead = new Audio('audio/dead.mp3');
-        this.collect_coin = new Audio('audio/coin.mp3');
-        this.collect_bottle = new Audio('audio/bottle.mp3');
-        this.bottle_breaking = new Audio('audio/glass.mp3');
-        this.bottle_throwing = new Audio('audio/throw.mp3');
-        this.endboss_hurt = new Audio('audio/endboss_hurt.mp3');
-        this.endboss_attack = new Audio('audio/endboss_attack.mp3');
-        this.endboss_dead = new Audio('audio/endboss_dead.mp3');
-        this.chicken_dead = new Audio('audio/chicken.mp3');
-        this.smallChicken_dead = new Audio('audio/smallchicken.mp3');
-        }
+        this.bottle_breaking = window.audio.bottle_breaking;
+        this.bottle_throwing = window.audio.bottle_throwing;
+        this.chicken_dead = window.audio.chicken_dead;
+        this.collect_bottle = window.audio.collect_bottle;
+        this.collect_coin = window.audio.collect_coin;
+        this.endboss_attack = window.audio.endboss_attack;
+        this.endboss_dead = window.audio.endboss_dead;
+        this.endboss_hurt = window.audio.endboss_hurt;
+        this.is_dead = window.audio.is_dead;
+        this.is_hurt = window.audio.is_hurt;
+        this.jumping_sound = window.audio.jumping_sound;
+        this.smallChicken_dead = window.audio.smallChicken_dead;
+        this.walking_sound = window.audio.walking_sound;
+    }
 
-/**
- * The function handles collisions between the player and items, incrementing the collected coins or
- * bottles and removing the item accordingly.
- * @param item - The parameter "item" is an object that represents an item in the game that the
- * player's character can collide with. The function "handleCollision" is called when the player's
- * character collides with an item, and it checks the type of the item (whether it is a coin or a
- * bottle
- */
+    /**
+     * The function handles collisions between the player and items, incrementing the collected coins or
+     * bottles and removing the item accordingly.
+     * @param item - The parameter "item" is an object that represents an item in the game that the
+     * player's character can collide with. The function "handleCollision" is called when the player's
+     * character collides with an item, and it checks the type of the item (whether it is a coin or a
+     * bottle
+     */
     handleCollision(item) {
         if (this.hitTest(item)) {
             if (item.type === 'coin') {
@@ -123,15 +124,14 @@ class Character extends MovableObject {
         }
     }
 
-/**
- * The function animates the movement and actions of a character in a game, including walking, jumping,
- * and playing different animations based on the character's state.
- */
+    /**
+     * The function animates the movement and actions of a character in a game, including walking, jumping,
+     * and playing different animations based on the character's state.
+     */
 
     animate() {
-
         let isWalking = false;
-
+    
         setInterval(() => {
             if (!isWalking) {
                 this.walking_sound.pause();
@@ -141,7 +141,7 @@ class Character extends MovableObject {
                 this.otherDirection = false;
                 this.walking_sound.playbackRate = 2;
                 if (!isWalking) {
-                    this.walking_sound.play();
+                    this.walking_sound.play()
                     isWalking = true;
                 }
             }
@@ -158,7 +158,7 @@ class Character extends MovableObject {
                 this.walking_sound.pause();
                 isWalking = false;
             }
-
+    
             if (this.world.keyboard.UP || this.world.keyboard.SPACE) {
                 if (!this.isJumping) {
                     this.isJumping = true;
@@ -166,7 +166,8 @@ class Character extends MovableObject {
                 }
             } else {
                 this.isJumping = false;
-            } this.world.camera_x = -this.x + 100;
+            }
+            this.world.camera_x = -this.x + 100;
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
@@ -224,10 +225,10 @@ class Character extends MovableObject {
         setInterval(updateAnimation, 55);
     }
 
-/**
- * The "jump" function sets the speed of an object to 40 and plays a sound if the object is not above
- * the ground.
- */
+    /**
+     * The "jump" function sets the speed of an object to 40 and plays a sound if the object is not above
+     * the ground.
+     */
     jump() {
         if (!this.isAboveGround()) {
             this.speedY = 40;
@@ -235,10 +236,10 @@ class Character extends MovableObject {
         }
     }
 
-/**
- * The function decreases the health of an object and changes its speed when hit by an end boss in a
- * game.
- */
+    /**
+     * The function decreases the health of an object and changes its speed when hit by an end boss in a
+     * game.
+     */
     hitByEndboss() {
         this.speedX = -80;
         this.speedY = 40;
@@ -250,32 +251,32 @@ class Character extends MovableObject {
         }
     }
 
-/**
- * The function sets the position and speed of an object when it collides with an enemy.
- * @param enemy - The "enemy" parameter is likely an object representing an enemy or obstacle in a
- * game. The function "bounceOnCollision" is likely called when the player's character collides with
- * the enemy, and it sets the player's position and speed to simulate a bouncing effect. Specifically,
- * it sets the player
- */
+    /**
+     * The function sets the position and speed of an object when it collides with an enemy.
+     * @param enemy - The "enemy" parameter is likely an object representing an enemy or obstacle in a
+     * game. The function "bounceOnCollision" is likely called when the player's character collides with
+     * the enemy, and it sets the player's position and speed to simulate a bouncing effect. Specifically,
+     * it sets the player
+     */
     bounceOnCollision(enemy) {
         this.y = enemy.y - this.height;
         this.speedY = 40;
     }
 
-/**
- * The function calculates the absolute distance traveled by an object in the x-axis from its starting
- * position.
- * @returns The `getDistanceTraveled()` method is returning the absolute value of the difference
- * between the current `x` position and the starting position `startPositionX`. This represents the
- * distance traveled by the object along the x-axis.
- */
+    /**
+     * The function calculates the absolute distance traveled by an object in the x-axis from its starting
+     * position.
+     * @returns The `getDistanceTraveled()` method is returning the absolute value of the difference
+     * between the current `x` position and the starting position `startPositionX`. This represents the
+     * distance traveled by the object along the x-axis.
+     */
     getDistanceTraveled() {
         return Math.abs(this.x - this.startPositionX);
     }
 
-/**
- * The function applies gravity to an object's movement in a game by adjusting its position and speed.
- */
+    /**
+     * The function applies gravity to an object's movement in a game by adjusting its position and speed.
+     */
     applyGravity() {
         setInterval(() => {
             this.x += this.speedX;
@@ -290,9 +291,9 @@ class Character extends MovableObject {
         }, 40);
     }
 
-/**
- * The function applies horizontal damping to reduce the speed of an object over time.
- */
+    /**
+     * The function applies horizontal damping to reduce the speed of an object over time.
+     */
     applyHorizontalDamping() {
         setInterval(() => {
             if (Math.abs(this.speedX) > 0.1) {
@@ -303,9 +304,8 @@ class Character extends MovableObject {
         }, 40);
     }
 
-/* Creating a new instance of the `Hitbox` class with the parameters `85`, `25`, `10`, and `20`, and
-assigning it to the `hitbox` property of the `Character` class. This `Hitbox` instance represents
-the hitbox or collision box of the character in the game. */
+    /* Creating a new instance of the `Hitbox` class with the parameters `85`, `25`, `10`, and `20`, and
+    assigning it to the `hitbox` property of the `Character` class. This `Hitbox` instance represents
+    the hitbox or collision box of the character in the game. */
     hitbox = new Hitbox(85, 25, 10, 20);
 }
-
