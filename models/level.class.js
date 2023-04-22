@@ -2,7 +2,7 @@ class Level {
     enemies;
     clouds;
     backgroundObjects;
-    level_end_x = 6800; // Max map reach
+    level_end_x = 5800; // Max map reach
 
     constructor(enemies, clouds, backgroundObjects){
         this.enemies = enemies;

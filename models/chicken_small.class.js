@@ -32,7 +32,7 @@ class Smallchicken extends MovableObject {
     static generateXPosition() {
         const minDistance = 500;
         const minStartPosition = 500;
-        const maxRange = 6000;
+        const maxRange = 5000;
         const randomDistance = minDistance + Math.random() * minDistance;
         const lastChickenX = Smallchicken.lastChickenX || minStartPosition - randomDistance;
 

@@ -51,6 +51,7 @@ function toggleSound() {
     if (isSoundOn) {
         soundButton.classList.remove('sound-on');
         soundButton.classList.add('sound-off');
+        character.muteAllSound();
         allAudioElements.forEach(audio => {
             audio.muted = true;
             audio.volume = 0;

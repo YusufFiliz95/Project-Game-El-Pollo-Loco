@@ -71,7 +71,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
-        this.x = 6750;
+        this.x = 5750;
         this.animate();
         this.isAlert = false;
         this.movingLeft = false;
@@ -114,7 +114,7 @@ class Endboss extends MovableObject {
         }, 100);
         setInterval(() => {
             if (this.dead) {
-                this.loadImage('img/4_enemie_boss_chicken/5_dead/G26.png');
+                this.playAnimation(this.IMAGES_DEAD);
                 if (!this.youWinTriggered) {
                     setTimeout(() => {
                         bgMusic.pause();
@@ -124,7 +124,6 @@ class Endboss extends MovableObject {
                 }
             }
         }, 200);
-        
     }
 
 /**

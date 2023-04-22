@@ -195,8 +195,8 @@ let lastXCoordinateCoin = 0;
 let lastXCoordinateBottle = 0;
 const minDistanceBetweenCoinPatterns = 200;
 const minDistanceBetweenBottlePatterns = 200;
-const maxCoinRange = 5600;
-const maxBottleRange = 5600;
+const maxCoinRange = 4600;
+const maxBottleRange = 4600;
 
 /**
  * The function creates an alternating pattern of randomly generated coin and bottle items with

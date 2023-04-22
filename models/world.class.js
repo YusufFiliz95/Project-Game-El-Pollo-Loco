@@ -436,7 +436,7 @@ class World {
         this.addObjectsToMap(this.throwableObjects);
 
         const distanceTraveled = this.character.getDistanceTraveled();
-        if (distanceTraveled >= 6400) {
+        if (distanceTraveled >= 5400) {
             const endboss = this.level.enemies.find(enemy => enemy.type === 'endboss');
             if (endboss && !endboss.isAlert) {
                 if (bgMusic) {

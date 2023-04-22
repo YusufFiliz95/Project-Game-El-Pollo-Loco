@@ -53,7 +53,7 @@ class MovableObject extends DrawableObject {
  * objects being compared are colliding, and `false` if they are not colliding.
  */
 isColliding(mo) {
-    if (this.isDead()) {
+    if (this.isDead() || (this instanceof Character && this.isHurt())) {
         return false;
     }
 

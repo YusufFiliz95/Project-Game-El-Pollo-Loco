@@ -4,7 +4,7 @@ class Character extends MovableObject {
     width = 110;
     height = 220;
     y = -50; // 135
-    speed = 5; //5
+    speed = 50; //5
     isJumping = false;
     startPositionX = this.x;
 
@@ -60,19 +60,6 @@ class Character extends MovableObject {
     ]
 
     world;
-    walking_sound = new Audio('audio/running.mp3');
-    jumping_sound = new Audio('audio/jump.mp3');
-    is_hurt = new Audio('audio/hurt.mp3');
-    is_dead = new Audio('audio/dead.mp3');
-    collect_coin = new Audio('audio/coin.mp3');
-    collect_bottle = new Audio('audio/bottle.mp3');
-    bottle_breaking = new Audio('audio/glass.mp3');
-    bottle_throwing = new Audio('audio/throw.mp3');
-    endboss_hurt = new Audio('audio/endboss_hurt.mp3');
-    endboss_attack = new Audio('audio/endboss_attack.mp3');
-    endboss_dead = new Audio('audio/endboss_dead.mp3');
-    chicken_dead = new Audio('audio/chicken.mp3');
-    smallChicken_dead = new Audio('audio/smallchicken.mp3');
 
     muteAllSounds() {
         this.walking_sound.muted = true;
@@ -100,8 +87,21 @@ class Character extends MovableObject {
         this.applyHorizontalDamping();
         this.applyGravity();
         this.animate();
-        this.gameOverTriggered = false; 
-    }
+        this.gameOverTriggered = false;
+        this.walking_sound = new Audio('audio/running.mp3');
+        this.jumping_sound = new Audio('audio/jump.mp3');
+        this.is_hurt = new Audio('audio/hurt.mp3');
+        this.is_dead = new Audio('audio/dead.mp3');
+        this.collect_coin = new Audio('audio/coin.mp3');
+        this.collect_bottle = new Audio('audio/bottle.mp3');
+        this.bottle_breaking = new Audio('audio/glass.mp3');
+        this.bottle_throwing = new Audio('audio/throw.mp3');
+        this.endboss_hurt = new Audio('audio/endboss_hurt.mp3');
+        this.endboss_attack = new Audio('audio/endboss_attack.mp3');
+        this.endboss_dead = new Audio('audio/endboss_dead.mp3');
+        this.chicken_dead = new Audio('audio/chicken.mp3');
+        this.smallChicken_dead = new Audio('audio/smallchicken.mp3');
+        }
 
 /**
  * The function handles collisions between the player and items, incrementing the collected coins or
@@ -308,3 +308,4 @@ assigning it to the `hitbox` property of the `Character` class. This `Hitbox` in
 the hitbox or collision box of the character in the game. */
     hitbox = new Hitbox(85, 25, 10, 20);
 }
+
