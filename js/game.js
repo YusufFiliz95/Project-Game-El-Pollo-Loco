@@ -10,7 +10,13 @@ let isMuted = false;
  */
 function startGame() {
     canvas = document.getElementById('canvas');
-    document.getElementById('gamemenu').classList.add('d-none');
+    game = document.getElementById('game');
+    gameMenu = document.getElementById('gamemenu');
+    soundButtonInGame = document.getElementById('soundbuttoningame');
+    soundButtonInGame.classList.remove('d-none');
+    game.classList.remove('game');
+    game.classList.add('game-active');
+    gameMenu.classList.add('d-none');
     canvas.classList.remove('d-none');
     world = new World(canvas, keyboard);
 
@@ -21,6 +27,7 @@ function startGame() {
         }
     }
     playMusic();
+
 }
 
 /**
@@ -39,16 +46,21 @@ function playMusic() {
  */
 function toggleSound() {
     const soundButton = document.getElementById('soundbutton');
+    const soundButtonInGame = document.getElementById('soundbuttoningame');
     const isSoundOn = soundButton.classList.contains('sound-on');
     isSoundMuted = !isSoundOn;
 
     if (isSoundOn) {
         soundButton.classList.remove('sound-on');
         soundButton.classList.add('sound-off');
+        soundButtonInGame.classList.remove('sound-on');
+        soundButtonInGame.classList.add('sound-off');
         window.muteAudio();
     } else {
         soundButton.classList.remove('sound-off');
         soundButton.classList.add('sound-on');
+        soundButtonInGame.classList.remove('sound-off');
+        soundButtonInGame.classList.add('sound-on');
         window.unmuteAudio();
     }
 

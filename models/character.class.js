@@ -4,7 +4,7 @@ class Character extends MovableObject {
     width = 110;
     height = 220;
     y = -50; // 135
-    speed = 50; //5
+    speed = 5; //5
     isJumping = false;
     startPositionX = this.x;
 
@@ -131,7 +131,7 @@ class Character extends MovableObject {
 
     animate() {
         let isWalking = false;
-    
+
         setInterval(() => {
             if (!isWalking) {
                 this.walking_sound.pause();
@@ -158,7 +158,7 @@ class Character extends MovableObject {
                 this.walking_sound.pause();
                 isWalking = false;
             }
-    
+
             if (this.world.keyboard.UP || this.world.keyboard.SPACE) {
                 if (!this.isJumping) {
                     this.isJumping = true;

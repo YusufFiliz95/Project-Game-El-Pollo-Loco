@@ -4,7 +4,7 @@ const level1 = new Level(
         /* Creating an array of objects that will be used as enemies in a game level. The array includes
         multiple instances of the `Chicken` and `Smallchicken` classes, as well as a pattern of alternating
         objects created by the `createAlternatingPattern()` function. */
-        new Chicken(),
+/*         new Chicken(),
         new Chicken(),
         new Chicken(),
         new Chicken(),
@@ -29,7 +29,7 @@ const level1 = new Level(
         ...createAlternatingPattern(),
         ...createAlternatingPattern(),
         ...createAlternatingPattern(),
-        ...createAlternatingPattern(),
+        ...createAlternatingPattern(), */
 
         /* `new Endboss()` is creating an instance of the `Endboss` class, which is added to the array
         of enemies in the `level1` object. This suggests that the `Endboss` is the final enemy that

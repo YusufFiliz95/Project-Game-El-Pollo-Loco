@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,22 +27,26 @@
     <script src="js/game.js"></script>
     <script src="js/audio.js"></script>
 </head>
+
 <body>
-    <canvas id="canvas" width="800" height="480" class="d-none"></canvas>
-    <div class="menu-container-section" id="gamemenu">
-        <div>
+    <div class="game" id="game">
+        <canvas id="canvas" width="720" height="480" class="d-none"></canvas>
+        <button class="settings-icon sound-on sound-button-in-game d-none" onclick="toggleSound()"
+            id="soundbuttoningame"></button>
+        <div class="menu-container-section" id="gamemenu">
             <button class="start" onclick="startGame()">START</button>
+            <div>
+                <button class="settings-icon sound-on" onclick="toggleSound()" id="soundbutton"></button>
+                <button onclick="openSettings()" class="settings-icon setting"></button>
+            </div>
         </div>
-        <div>
-            <button class="settings-icon sound-on" onclick="toggleSound()" id="soundbutton"></button>
-            <button onclick="openSettings()" class="settings-icon setting"></button>
-        </div>
-    </div>
-    <div class="gameover-win d-none" id="gameoverwinimage">
-        <img src="" alt="" id="gameoverwin">
-        <div>
-            <button onclick="goToMenu()">Go To Menu</button>
+        <div class="gameover-win d-none" id="gameoverwinimage">
+            <img src="" alt="" id="gameoverwin">
+            <div>
+                <button onclick="goToMenu()">Go To Menu</button>
+            </div>
         </div>
     </div>
 </body>
+
 </html>
