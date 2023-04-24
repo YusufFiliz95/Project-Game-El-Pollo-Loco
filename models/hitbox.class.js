@@ -36,5 +36,3 @@ detection. */
             y1 + marginATop < y2 + height2 - marginBBottom;
     }
 }
-
-// Example: hitbox = new Hitbox(marginTop, marginRight, marginBottom, marginLeft);

@@ -9,6 +9,12 @@ class Coin extends MovableObject {
         'img/8_coin/coin_2.png',
     ];
 
+/**
+ * This is a constructor function that loads images and sets the initial position of a coin object, and
+ * then animates it.
+ * @param x - The x-coordinate of the coin's position on the game screen.
+ * @param y - The y-coordinate of the coin's position on the game screen.
+ */
     constructor(x, y) {
         super();
         this.loadImage('img/8_coin/coin_1.png');
@@ -18,6 +24,9 @@ class Coin extends MovableObject {
         this.animate();
     }
 
+/**
+ * The function uses setInterval to repeatedly play an animation of coin images.
+ */
     animate() {
         setInterval(() => {
             this.playAnimation(this.IMAGES_COIN)
@@ -41,6 +50,15 @@ class Bottle extends MovableObject {
         'img/6_salsa_bottle/salsa_bottle.png',
     ];
 
+/**
+ * This is a constructor function that sets the x and y coordinates and loads an image based on whether
+ * the object is on the ground or in the air.
+ * @param x - The x-coordinate of the object's position.
+ * @param y - The y parameter is the vertical position of the object on the canvas.
+ * @param [onGround=true] - The "onGround" parameter is a boolean value that indicates whether the
+ * object should be placed on the ground or in the air. If it is true, the object will be placed on the
+ * ground and if it is false, the object will be placed in the air at the specified y-coordinate.
+ */
     constructor(x, y, onGround = true) {
         super();
         if (onGround) {
@@ -54,6 +72,12 @@ class Bottle extends MovableObject {
         this.x = x;
     }
 
+/**
+ * The function returns a random image from an array of ground images.
+ * @returns A random image from the `IMAGES_GROUND` array. The image is selected using `Math.random()`
+ * to generate a random index within the length of the array, and `Math.floor()` to round down to the
+ * nearest integer.
+ */
     randomGroundImage() {
         return this.IMAGES_GROUND[Math.floor(Math.random() * this.IMAGES_GROUND.length)];
     }
@@ -206,7 +230,12 @@ const maxBottleRange = 4600;
  */
 function createAlternatingPattern() {
     let items = [];
+    items = createCoinPattern(items);
+    items = createBottlePattern(items);
+    return items;
+}
 
+function createCoinPattern(items){
     // Create coin pattern first
     const coinPattern = createRandomPattern(
         coinPatterns, lastRandomIndexCoin, lastXCoordinateCoin,
@@ -217,7 +246,10 @@ function createAlternatingPattern() {
 
     // Update lastXCoordinateBottle based on the last coin pattern
     lastXCoordinateBottle = lastXCoordinateCoin + minDistanceBetweenBottlePatterns;
+    return items;
+}
 
+function createBottlePattern(items){
     // Create bottle pattern
     const bottlePattern = createRandomPattern(
         bottlePatterns, lastRandomIndexBottle, lastXCoordinateBottle,
@@ -228,7 +260,5 @@ function createAlternatingPattern() {
 
     // Update lastXCoordinateCoin based on the last bottle pattern
     lastXCoordinateCoin = lastXCoordinateBottle + minDistanceBetweenCoinPatterns;
-
     return items;
 }
-

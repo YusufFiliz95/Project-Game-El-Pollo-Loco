@@ -143,7 +143,6 @@ function toggleSound() {
         soundButtonInGame.classList.add('sound-on');
         window.unmuteAudio();
     }
-
 }
 
 /**
@@ -179,7 +178,6 @@ function gameOver() {
         window.audio.game_over.play();
     }
 }
-
 
 /**
  * The function redirects the user to the "index.html" page.

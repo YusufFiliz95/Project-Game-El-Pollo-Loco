@@ -142,7 +142,6 @@ class Endboss extends MovableObject {
             this.movingLeft = true;
             this.walking = true;
             this.standing = true;
-
             const move = () => {
                 if (this.isAlert && this.movingLeft) {
                     this.x -= this.speed;
@@ -152,7 +151,6 @@ class Endboss extends MovableObject {
                     this.walking = false;
                 }
             };
-
             requestAnimationFrame(move);
         }
     }

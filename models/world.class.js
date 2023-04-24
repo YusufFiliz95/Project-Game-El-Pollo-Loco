@@ -374,7 +374,6 @@ class World {
             enemy.stopMoving();
             this.character.hitByEndboss();
             this.statusBar.setPercentage(this.character.health);
-
             setTimeout(() => {
                 enemy.attacking = false;
                 enemy.resumeMoving();
@@ -409,69 +408,112 @@ class World {
     */
     checkBottleCollision(index) {
         this.statusBarBottle.incrementCount();
-
         if (!isMuted) {
             const bottleAudio = this.collect_bottle.cloneNode();
             bottleAudio.play();
         }
-
         this.level.enemies.splice(index, 1);
     }
 
-    /**
-     * This function draws the game objects on the canvas and handles the movement of the end boss when the
-     * player has traveled a certain distance.
-     */
-    draw() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+/**
+ * This function draws the game objects on the canvas and handles the movement of the end boss when the
+ * player has traveled a certain distance.
+ */
+draw() {
+    this.clearCanvas();
+    this.translateCanvas();
+    this.addGameObjectsToMap();
+    this.handleEndBossMovement();
+    this.translateCanvasBack();
 
-        this.ctx.translate(this.camera_x, 0);
-        this.addObjectsToMap(this.level.backgroundObjects);
+    let self = this;
+    requestAnimationFrame(function () {
+        self.draw();
+    });
+}
 
-        this.addToMap(this.character);
-        this.addObjectsToMap(this.level.clouds);
-        this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.throwableObjects);
+/**
+ * Clears the canvas to prepare for the next frame.
+ */
+clearCanvas() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+}
 
-        const distanceTraveled = this.character.getDistanceTraveled();
-        if (distanceTraveled >= 5400) {
-            const endboss = this.level.enemies.find(enemy => enemy.type === 'endboss');
-            if (endboss && !endboss.isAlert) {
-                if (bgMusic) {
-                    bgMusic.pause(); // Stop the background music
-                }
-                if (!this.endbossMusicPlayed) {
-                    this.endbossMusic.play();
-                    this.endbossMusicPlayed = true;
-                }
-                endboss.isAlert = true;
-                setTimeout(() => {
-                    endboss.resumeMoving();
-                    endboss.moveLeft();
-                }, 3000);
-            }
+/**
+ * Translates the canvas based on the camera's x position.
+ */
+translateCanvas() {
+    this.ctx.translate(this.camera_x, 0);
+}
+
+/**
+ * Adds game objects to the map and renders them.
+ */
+addGameObjectsToMap() {
+    this.addObjectsToMap(this.level.backgroundObjects);
+    this.addToMap(this.character);
+    this.addObjectsToMap(this.level.clouds);
+    this.addObjectsToMap(this.level.enemies);
+    this.addObjectsToMap(this.throwableObjects);
+}
+
+/**
+ * Handles the movement of the end boss when the player has traveled a certain distance.
+ */
+handleEndBossMovement() {
+    const distanceTraveled = this.character.getDistanceTraveled();
+    if (distanceTraveled >= 5400) {
+        const endboss = this.level.enemies.find(enemy => enemy.type === 'endboss');
+        if (endboss && !endboss.isAlert) {
+            this.playEndBossMusic();
+            this.activateEndBoss(endboss);
         }
-
-        this.level.enemies.forEach(enemy => {
-            if (enemy.type === 'endboss' && enemy.isAlert) {
-                enemy.moveLeft();
-            }
-        });
-
-
-        this.ctx.translate(-this.camera_x, 0);
-        this.addToMap(this.statusBar);
-        this.addToMap(this.statusBarBottle);
-        this.addToMap(this.statusBarCoin);
-        this.ctx.translate(this.camera_x, 0);
-
-        this.ctx.translate(-this.camera_x, 0);
-
-        let self = this;
-        requestAnimationFrame(function () {
-            self.draw();
-        });
     }
+
+    this.level.enemies.forEach(enemy => {
+        if (enemy.type === 'endboss' && enemy.isAlert) {
+            enemy.moveLeft();
+        }
+    });
+}
+
+/**
+ * Plays the end boss music and stops the background music.
+ */
+playEndBossMusic() {
+    if (bgMusic) {
+        bgMusic.pause(); // Stop the background music
+    }
+    if (!this.endbossMusicPlayed) {
+        this.endbossMusic.play();
+        this.endbossMusicPlayed = true;
+    }
+}
+
+/**
+ * Activates the end boss, making it alert and resuming its movement.
+ * @param {Object} endboss - The end boss object to be activated.
+ */
+activateEndBoss(endboss) {
+    endboss.isAlert = true;
+    setTimeout(() => {
+        endboss.resumeMoving();
+        endboss.moveLeft();
+    }, 3000);
+}
+
+/**
+ * Translates the canvas back to the original position.
+ */
+translateCanvasBack() {
+    this.ctx.translate(-this.camera_x, 0);
+    this.addToMap(this.statusBar);
+    this.addToMap(this.statusBarBottle);
+    this.addToMap(this.statusBarCoin);
+    this.ctx.translate(this.camera_x, 0);
+    this.ctx.translate(-this.camera_x, 0);
+}
+
 
     /**
      * This function adds objects to a map by iterating through an array of objects and calling the

@@ -35,9 +35,7 @@ class Smallchicken extends MovableObject {
         const maxRange = 5000;
         const randomDistance = minDistance + Math.random() * minDistance;
         const lastChickenX = Smallchicken.lastChickenX || minStartPosition - randomDistance;
-
         const newX = lastChickenX + randomDistance;
-
         if (newX > maxRange) {
             return lastChickenX;
         } else {
