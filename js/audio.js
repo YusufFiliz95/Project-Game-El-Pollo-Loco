@@ -18,27 +18,38 @@ window.audio = {
     walking_sound: new Audio('audio/running.mp3'),
     you_win: new Audio('audio/win.mp3'),
 };
-//Example: window.audio.bottle_breaking;
 
-
+/**
+ * The function mutes all audio elements on the webpage by setting their volume to 0.
+ */
 function muteAudio() {
     for (const key in window.audio) {
         if (window.audio[key] instanceof Audio) {
-            window.audio[key].muted = true;
+            window.audio[key].volume = 0;
         }
     }
     isMuted = true;
 }
 
+/**
+ * The function unmutes all audio elements on the webpage.
+ */
 function unmuteAudio() {
     for (const key in window.audio) {
         if (window.audio[key] instanceof Audio) {
-            window.audio[key].muted = false;
+            window.audio[key].volume = 1;
         }
     }
     isMuted = false;
 }
 
+/**
+ * The function mutes all audio except for the one specified by the exceptionAudioKey parameter.
+ * @param exceptionAudioKey - The parameter `exceptionAudioKey` is a string representing the key of an
+ * audio object that should not be muted. The function `muteAllExcept` loops through all the audio
+ * objects in the `window.audio` object and mutes them, except for the one with the key specified in
+ * `exceptionAudio
+ */
 function muteAllExcept(exceptionAudioKey) {
     for (const key in window.audio) {
         if (window.audio[key] instanceof Audio && key !== exceptionAudioKey) {

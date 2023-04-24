@@ -1,6 +1,7 @@
 class Character extends MovableObject {
 
-    type = 'character'
+    type = 'character';
+    direction = 'left';
     width = 110;
     height = 220;
     y = -50; // 135
@@ -137,6 +138,7 @@ class Character extends MovableObject {
                 this.walking_sound.pause();
             }
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+                this.direction = 'right';
                 this.x += this.speed;
                 this.otherDirection = false;
                 this.walking_sound.playbackRate = 2;
@@ -146,6 +148,7 @@ class Character extends MovableObject {
                 }
             }
             if (this.world.keyboard.LEFT && this.x > -1200) {
+                this.direction = 'left';
                 this.x -= this.speed;
                 this.otherDirection = true;
                 this.walking_sound.playbackRate = 2;
@@ -195,10 +198,11 @@ class Character extends MovableObject {
                 newAnimation = this.IMAGES_HURT;
                 this.is_hurt.play();
                 newTimeout = 100;
-            } else if (this.isAboveGround()) {
+            }else if (this.isAboveGround()) {
                 this.walking_sound.pause();
                 newAnimation = this.IMAGES_JUMPING;
-                newTimeout = 100;
+                newTimeout = 90;
+                this.animationIndex = 0;
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.walking_sound.play();
                 newAnimation = this.IMAGES_WALKING;
@@ -207,7 +211,6 @@ class Character extends MovableObject {
                 newAnimation = this.IMAGES_STANDING;
                 newTimeout = 150;
             }
-
             if (newAnimation !== currentAnimation) {
                 currentAnimation = newAnimation;
                 if (currentTimeout) {
