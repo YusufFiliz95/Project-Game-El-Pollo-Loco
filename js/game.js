@@ -68,52 +68,6 @@ function toggleActionButtons() {
 window.addEventListener('load', toggleActionButtons);
 window.addEventListener('resize', toggleActionButtons);
 
-/**
- * The function registers touch controls for mobile devices to control keyboard inputs for a game.
- * @param keyboard - It is a parameter that is being passed to the function `registerMobileControls`.
- * It is likely an object that represents the keyboard controls for the game. The function is adding
- * event listeners to the mobile controls (phoneMoveLeft, phoneMoveRight, phoneJump, phoneThrow) and
- * updating the corresponding properties
- */
-function registerMobileControls(keyboard) {
-    const phoneMoveLeft = document.getElementById('phonemoveleft');
-    const phoneMoveRight = document.getElementById('phonemoveright');
-    const phoneJump = document.getElementById('phonejump');
-    const phoneThrow = document.getElementById('phonethrow');
-
-    phoneMoveLeft.addEventListener('touchstart', () => {
-        keyboard.LEFT = true;
-    });
-    phoneMoveLeft.addEventListener('touchend', () => {
-        keyboard.LEFT = false;
-    });
-
-    phoneMoveRight.addEventListener('touchstart', () => {
-        keyboard.RIGHT = true;
-    });
-    phoneMoveRight.addEventListener('touchend', () => {
-        keyboard.RIGHT = false;
-    });
-
-    phoneJump.addEventListener('touchstart', () => {
-        keyboard.UP = true;
-    });
-    phoneJump.addEventListener('touchend', () => {
-        keyboard.UP = false;
-    });
-
-    phoneThrow.addEventListener('touchstart', () => {
-        keyboard.ENTER = true;
-    });
-    phoneThrow.addEventListener('touchend', () => {
-        keyboard.ENTER = false;
-    });
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    registerMobileControls(keyboard);
-});
-
 
 /**
  * The function plays a background music with adjustable volume and mute settings.

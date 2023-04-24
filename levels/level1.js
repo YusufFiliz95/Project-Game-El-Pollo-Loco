@@ -4,7 +4,7 @@ const level1 = new Level(
         /* Creating an array of objects that will be used as enemies in a game level. The array includes
         multiple instances of the `Chicken` and `Smallchicken` classes, as well as a pattern of alternating
         objects created by the `createAlternatingPattern()` function. */
-        new Chicken(),
+ /*        new Chicken(),
         new Chicken(),
         new Chicken(),
         new Chicken(),
@@ -17,7 +17,7 @@ const level1 = new Level(
         new Smallchicken(),
         new Smallchicken(),
         new Smallchicken(),
-        new Smallchicken(),
+        new Smallchicken(), */
         ...createAlternatingPattern(),
         ...createAlternatingPattern(),
         ...createAlternatingPattern(),
