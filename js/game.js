@@ -3,8 +3,6 @@ let world;
 let keyboard = new Keyboard();
 let isMuted = false;
 
-
-
 /**
  * The function starts the game by initializing the canvas, creating a new world, and animating all
  * chickens and small chickens in the level.
@@ -30,10 +28,20 @@ function startGame() {
     playMusic();
 }
 
+/**
+ * The function checks if the user agent string contains any of the mobile device keywords and returns
+ * a boolean value indicating whether the device is a mobile device or not.
+ * @returns a boolean value (true or false) based on whether the user agent string contains any of the
+ * mobile device keywords specified in the regular expression.
+ */
 function isMobileDevice() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
+/**
+ * The function toggles the visibility of action buttons based on the device orientation and screen
+ * size.
+ */
 function toggleActionButtons() {
     const actionButtons = document.querySelector('.action-buttons');
     const isLandscape = window.matchMedia("(orientation: landscape)").matches;
@@ -49,7 +57,13 @@ function toggleActionButtons() {
 window.addEventListener('load', toggleActionButtons);
 window.addEventListener('resize', toggleActionButtons);
 
-
+/**
+ * The function registers touch controls for mobile devices to control keyboard inputs for a game.
+ * @param keyboard - It is a parameter that is being passed to the function `registerMobileControls`.
+ * It is likely an object that represents the keyboard controls for the game. The function is adding
+ * event listeners to the mobile controls (phoneMoveLeft, phoneMoveRight, phoneJump, phoneThrow) and
+ * updating the corresponding properties
+ */
 function registerMobileControls(keyboard) {
     const phoneMoveLeft = document.getElementById('phonemoveleft');
     const phoneMoveRight = document.getElementById('phonemoveright');
