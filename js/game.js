@@ -44,13 +44,19 @@ function isMobileDevice() {
  */
 function toggleActionButtons() {
     const actionButtons = document.querySelector('.action-buttons');
+    const rotatePhone = document.getElementById('rotatephone');
     const isLandscape = window.matchMedia("(orientation: landscape)").matches;
     const isMobile = isMobileDevice();
 
-    if ((isMobile && isLandscape) || (!isMobile && window.innerWidth < 719)) {
+    if (isMobile && isLandscape) {
         actionButtons.classList.remove('d-none');
+        rotatePhone.classList.add('d-none');
+    } else if (!isMobile && window.innerWidth < 719) {
+        actionButtons.classList.remove('d-none');
+        rotatePhone.classList.remove('d-none');
     } else {
         actionButtons.classList.add('d-none');
+        rotatePhone.classList.add('d-none');
     }
 }
 
