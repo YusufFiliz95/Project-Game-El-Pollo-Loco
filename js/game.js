@@ -3,11 +3,14 @@ let world;
 let keyboard = new Keyboard();
 let isMuted = false;
 
+
 /**
  * The function starts the game by initializing the canvas, creating a new world, and animating all
  * chickens and small chickens in the level.
  */
 function startGame() {
+    let soundButton = document.getElementById('soundbutton');
+    let isSoundOn = soundButton.classList.contains('sound-on');
     canvas = document.getElementById('canvas');
     game = document.getElementById('game');
     gameMenu = document.getElementById('gamemenu');
@@ -25,7 +28,9 @@ function startGame() {
             enemy.animate();
         }
     }
-    playMusic();
+    if(isSoundOn){
+        playMusic();
+    }
 }
 
 /**
