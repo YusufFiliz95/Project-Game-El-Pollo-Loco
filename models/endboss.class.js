@@ -119,7 +119,7 @@ class Endboss extends MovableObject {
                     setTimeout(() => {
                         bgMusic.pause();
                         youWin();
-                    }, 1000);
+                    }, 1500);
                     this.youWinTriggered = true;
                 }
             }

@@ -12,8 +12,8 @@ function startGame() {
     canvas = document.getElementById('canvas');
     game = document.getElementById('game');
     gameMenu = document.getElementById('gamemenu');
-    soundButtonInGame = document.getElementById('soundbuttoningame');
-    soundButtonInGame.classList.remove('d-none');
+    buttonsInGame = document.getElementById('showbuttonsingame');
+    buttonsInGame.classList.remove('d-none');
     game.classList.remove('game');
     game.classList.add('game-active');
     gameMenu.classList.add('d-none');
@@ -27,8 +27,26 @@ function startGame() {
         }
     }
     playMusic();
-
+    toggleActionButtons();
 }
+
+function toggleActionButtons() {
+    const actionButtons = document.querySelector('.action-buttons');
+    const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+
+    if (window.innerWidth < 719 || isLandscape) {
+        actionButtons.classList.remove('d-none');
+    } else {
+        actionButtons.classList.add('d-none');
+    }
+}
+
+window.addEventListener('load', toggleActionButtons);
+window.addEventListener('resize', toggleActionButtons);
+
+
+
+
 
 /**
  * The function plays a background music with adjustable volume and mute settings.

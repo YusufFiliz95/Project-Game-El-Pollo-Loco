@@ -17,11 +17,11 @@ window.audio = {
     throw_bottle: new Audio('audio/throw.mp3'),
     walking_sound: new Audio('audio/running.mp3'),
     you_win: new Audio('audio/win.mp3'),
-  };
-  //Example: window.audio.bottle_breaking;
+};
+//Example: window.audio.bottle_breaking;
 
 
-  function muteAudio() {
+function muteAudio() {
     for (const key in window.audio) {
         if (window.audio[key] instanceof Audio) {
             window.audio[key].muted = true;
@@ -31,23 +31,22 @@ window.audio = {
 }
 
 function unmuteAudio() {
-  for (const key in window.audio) {
-      if (window.audio[key] instanceof Audio) {
-          window.audio[key].muted = false;
-      }
-  }
-  isMuted = false;
+    for (const key in window.audio) {
+        if (window.audio[key] instanceof Audio) {
+            window.audio[key].muted = false;
+        }
+    }
+    isMuted = false;
 }
 
 function muteAllExcept(exceptionAudioKey) {
-  for (const key in window.audio) {
-      if (window.audio[key] instanceof Audio && key !== exceptionAudioKey) {
-          window.audio[key].muted = true;
-      }
-  }
+    for (const key in window.audio) {
+        if (window.audio[key] instanceof Audio && key !== exceptionAudioKey) {
+            window.audio[key].muted = true;
+        }
+    }
 }
 
 window.muteAudio = muteAudio;
 window.unmuteAudio = unmuteAudio;
 
-  

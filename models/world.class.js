@@ -285,7 +285,7 @@ class World {
         setTimeout(() => {
             enemy.hurt = false;
             enemy.resumeMoving();
-            enemy.speed *= 1.2;
+            enemy.speed *= 1.3;
         }, 1500);
 
         setTimeout(() => {
@@ -304,7 +304,6 @@ class World {
     */
     checkChickenCollision(enemy) {
         if (this.character.y + this.character.height < enemy.y + enemy.height) {
-            console.log('Chicken');
             enemy.isDead = true;
             enemy.loadImage(enemy.IMAGES_DEAD);
             this.character.chicken_dead.play();
@@ -340,7 +339,6 @@ class World {
         }
         this.lastCollisionTime = currentTime;
         if (this.character.y + this.character.height <= enemy.y + enemy.height + 6) {
-            console.log('Smallchicken');
             enemy.isDead = true;
             enemy.loadImage(enemy.IMAGES_DEAD);
             this.character.smallChicken_dead.play();
@@ -395,6 +393,13 @@ class World {
         }
     }
 
+    playAudio(src, playbackRate = 1, volume = 1) {
+        const audio = new Audio(src);
+        audio.playbackRate = playbackRate;
+        audio.volume = volume;
+        audio.play();
+        return audio;
+    }
 
     /**
     Increments the coin count, removes the coin, and checks if the bottle count should be incremented.
@@ -402,12 +407,9 @@ class World {
     */
     checkCoinCollision(index) {
         this.statusBarCoin.incrementCount();
-
-        // Create a new Audio instance and play the sound
-        this.collect_coin.play();
-        this.collect_coin.playbackRate = 1;
-        this.collect_coin.volume = 0.4;
-
+    
+        this.playAudio(this.collect_coin.src, 1, 0.4);
+    
         this.level.enemies.splice(index, 1);
         if (this.statusBarCoin.count % 3 === 0) {
             this.statusBarBottle.incrementCount();
@@ -422,8 +424,7 @@ class World {
     checkBottleCollision(index) {
         this.statusBarBottle.incrementCount();
 
-        // Create a new Audio instance and play the sound
-        this.collect_bottle.play();
+        this.playAudio(this.collect_bottle.src);
 
         this.level.enemies.splice(index, 1);
     }

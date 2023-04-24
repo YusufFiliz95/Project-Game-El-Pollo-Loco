@@ -30,9 +30,22 @@
 
 <body>
     <div class="game" id="game">
+        <div class="buttons-in-game d-none" id="showbuttonsingame">
+            <div>
+                <button class="settings-icon sound-on sound-button-in-game" onclick="toggleSound()"id="soundbuttoningame"></button>
+            </div>
+            <div class="action-buttons d-none" id="actionbuttons">
+                <div>
+                    <button class="move-left"></button>
+                    <button class="move-right"></button>
+                </div>
+                <div>
+                    <button class="jump-high"></button>
+                    <button class="throw"></button>
+                </div>
+            </div>
+        </div>
         <canvas id="canvas" width="720" height="480" class="d-none"></canvas>
-        <button class="settings-icon sound-on sound-button-in-game d-none" onclick="toggleSound()"
-            id="soundbuttoningame"></button>
         <div class="menu-container-section" id="gamemenu">
             <button class="start" onclick="startGame()">START</button>
             <div>

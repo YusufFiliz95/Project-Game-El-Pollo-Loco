@@ -125,8 +125,59 @@ h1 {
     justify-content: space-around;
 }
 
-.sound-button-in-game {
-    position: absolute;
+.buttons-in-game {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: end;
+    position: fixed;
+    max-width: 100%;
+    max-height: 100%;
+    aspect-ratio: 720 / 480;
+}
+
+.action-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.action-buttons button{
+    width: 40px;
+    height: 40px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 100%;
+    background-color: rgb(243, 188, 70);
+}
+
+.move-left {
+    background-image: url(img/icons/move-left.svg);
+    background-size: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.move-right {
+    background-image: url(img/icons/move-right.svg);
+    background-size: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.jump-high{
+    background-image: url(img/icons/jump.svg);
+    background-size: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.throw {
+    background-image: url(img/icons/bottle.svg);
+    background-size: 25px;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .instructions p {
@@ -226,6 +277,10 @@ canvas {
         width: 100%;
     }
 
+    .buttons-in-game {
+        width: 100%;
+    }
+
 }
 
 @media only screen and (max-height: 480px) {
@@ -242,6 +297,10 @@ canvas {
     }
 
     .gameover-win img {
+        height: 100vh;
+    }
+
+    .buttons-in-game {
         height: 100vh;
     }
 
