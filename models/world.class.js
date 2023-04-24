@@ -287,14 +287,6 @@ class World {
             enemy.resumeMoving();
             enemy.speed *= 1.3;
         }, 1500);
-
-        setTimeout(() => {
-            enemy.speed *= 8; // Increase the speed
-        }, 150);
-
-        setTimeout(() => {
-            enemy.speed /= 8; // Reset the speed back to normal
-        }, 1650);
     }
 
     /**
