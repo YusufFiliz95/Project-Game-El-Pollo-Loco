@@ -102,4 +102,5 @@ class Keyboard {
             this.keyReleased.ENTER = true;
         }
     }
+    
 }

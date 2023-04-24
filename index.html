@@ -30,18 +30,24 @@
 
 <body>
     <div class="game" id="game">
+        <div class="gameover-win d-none" id="gameoverwinimage">
+            <img src="" alt="" id="gameoverwin">
+            <div>
+                <button onclick="goToMenu()">Go To Menu</button>
+            </div>
+        </div>
         <div class="buttons-in-game d-none" id="showbuttonsingame">
             <div>
                 <button class="settings-icon sound-on sound-button-in-game" onclick="toggleSound()"id="soundbuttoningame"></button>
             </div>
             <div class="action-buttons d-none" id="actionbuttons">
                 <div>
-                    <button class="move-left"></button>
-                    <button class="move-right"></button>
+                    <button class="move-left" id="phonemoveleft"></button>
+                    <button class="move-right" id="phonemoveright"></button>
                 </div>
                 <div>
-                    <button class="jump-high"></button>
-                    <button class="throw"></button>
+                    <button class="jump-high" id="phonejump"></button>
+                    <button class="throw" id="phonethrow"></button>
                 </div>
             </div>
         </div>
@@ -51,12 +57,6 @@
             <div>
                 <button class="settings-icon sound-on" onclick="toggleSound()" id="soundbutton"></button>
                 <button onclick="openSettings()" class="settings-icon setting"></button>
-            </div>
-        </div>
-        <div class="gameover-win d-none" id="gameoverwinimage">
-            <img src="" alt="" id="gameoverwin">
-            <div>
-                <button onclick="goToMenu()">Go To Menu</button>
             </div>
         </div>
     </div>

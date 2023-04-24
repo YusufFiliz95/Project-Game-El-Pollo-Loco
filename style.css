@@ -204,8 +204,9 @@ h1 {
 }
 
 .gameover-win {
-    width: 720px;
-    background-color: black;
+    max-width: 720px;
+    max-height: 480px;
+    aspect-ratio: 720 / 480;
     background-image: url('img/5_background/first_half_background.png');
     background-size: cover;
     background-position: center;
@@ -273,7 +274,7 @@ canvas {
         width: 100%;
     }
 
-    .gameover-win img {
+    .gameover-win {
         width: 100%;
     }
 
@@ -296,7 +297,7 @@ canvas {
         height: 100vh;
     }
 
-    .gameover-win img {
+    .gameover-win {
         height: 100vh;
     }
 

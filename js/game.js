@@ -4,6 +4,7 @@ let keyboard = new Keyboard();
 let isMuted = false;
 
 
+
 /**
  * The function starts the game by initializing the canvas, creating a new world, and animating all
  * chickens and small chickens in the level.
@@ -27,14 +28,18 @@ function startGame() {
         }
     }
     playMusic();
-    toggleActionButtons();
+}
+
+function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
 function toggleActionButtons() {
     const actionButtons = document.querySelector('.action-buttons');
     const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+    const isMobile = isMobileDevice();
 
-    if (window.innerWidth < 719 || isLandscape) {
+    if ((isMobile && isLandscape) || (!isMobile && window.innerWidth < 719)) {
         actionButtons.classList.remove('d-none');
     } else {
         actionButtons.classList.add('d-none');
@@ -45,7 +50,44 @@ window.addEventListener('load', toggleActionButtons);
 window.addEventListener('resize', toggleActionButtons);
 
 
+function registerMobileControls(keyboard) {
+    const phoneMoveLeft = document.getElementById('phonemoveleft');
+    const phoneMoveRight = document.getElementById('phonemoveright');
+    const phoneJump = document.getElementById('phonejump');
+    const phoneThrow = document.getElementById('phonethrow');
 
+    phoneMoveLeft.addEventListener('touchstart', () => {
+        keyboard.LEFT = true;
+    });
+    phoneMoveLeft.addEventListener('touchend', () => {
+        keyboard.LEFT = false;
+    });
+
+    phoneMoveRight.addEventListener('touchstart', () => {
+        keyboard.RIGHT = true;
+    });
+    phoneMoveRight.addEventListener('touchend', () => {
+        keyboard.RIGHT = false;
+    });
+
+    phoneJump.addEventListener('touchstart', () => {
+        keyboard.UP = true;
+    });
+    phoneJump.addEventListener('touchend', () => {
+        keyboard.UP = false;
+    });
+
+    phoneThrow.addEventListener('touchstart', () => {
+        keyboard.ENTER = true;
+    });
+    phoneThrow.addEventListener('touchend', () => {
+        keyboard.ENTER = false;
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    registerMobileControls(keyboard);
+});
 
 
 /**
@@ -89,8 +131,10 @@ function toggleSound() {
  * sound, and plays the "you win" sound if not muted.
  */
 function youWin() {
-    canvas.classList.add('d-none');
     const gameOverWin = document.getElementById('gameoverwinimage');
+    const buttonsInGame = document.getElementById('showbuttonsingame');
+    canvas.classList.add('d-none');
+    buttonsInGame.classList.add('d-none');
     gameOverWin.classList.remove('d-none');
     document.getElementById('gameoverwin').src = "img/9_intro_outro_screens/game_over/game over.png";
     muteAllExcept('you_win');
@@ -104,8 +148,10 @@ function youWin() {
  * sound, and plays the game over sound if not muted.
  */
 function gameOver() {
-    canvas.classList.add('d-none');
     const gameOverWin = document.getElementById('gameoverwinimage');
+    const buttonsInGame = document.getElementById('showbuttonsingame');
+    canvas.classList.add('d-none');
+    buttonsInGame.classList.add('d-none');
     gameOverWin.classList.remove('d-none');
     document.getElementById('gameoverwin').src = "img/9_intro_outro_screens/game_over/you lost.png";
     muteAllExcept('game_over');
