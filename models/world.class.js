@@ -97,24 +97,21 @@ class World {
         const timeLimit = 1000;
         const currentTime = Date.now();
 
-        if (this.keyboard.E && this.keyboard.keyReleased.E) {
+        if (this.keyboard.E) {
             if (!this.lastThrowTime || currentTime - this.lastThrowTime >= timeLimit) {
                 this.lastThrowTime = currentTime;
-                this.keyboard.keyReleased.E = false;
                 throwBottleIfPossible();
             }
         }
-        if (this.keyboard.F && this.keyboard.keyReleased.F) {
+        if (this.keyboard.F) {
             if (!this.lastThrowTime || currentTime - this.lastThrowTime >= timeLimit) {
                 this.lastThrowTime = currentTime;
-                this.keyboard.keyReleased.F = false;
                 throwBottleIfPossible();
             }
         }
-        if (this.keyboard.ENTER && this.keyboard.keyReleased.ENTER) {
+        if (this.keyboard.ENTER) {
             if (!this.lastThrowTime || currentTime - this.lastThrowTime >= timeLimit) {
                 this.lastThrowTime = currentTime;
-                this.keyboard.keyReleased.ENTER = false;
                 throwBottleIfPossible();
             }
         }

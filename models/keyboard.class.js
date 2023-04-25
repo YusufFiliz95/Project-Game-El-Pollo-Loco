@@ -8,12 +8,6 @@ class Keyboard {
     E = false;
     ENTER = false;
 
-    keyReleased = {
-        E: true,
-        F: true,
-        ENTER: true
-    };
-
     constructor() {
         document.addEventListener('keydown', (event) => {
             this.handleKeyDown(event);
@@ -23,7 +17,7 @@ class Keyboard {
             this.handleKeyUp(event);
         });
 
-        this.eventTouchpadBtns();
+        this.phoneButtons();
     }
 
     /**
@@ -93,73 +87,65 @@ class Keyboard {
         if (event.keyCode == 13) {
             this.ENTER = false;
         }
-        if (event.keyCode == 69) {
-            this.keyReleased.E = true;
-        }
-        if (event.keyCode == 70) {
-            this.keyReleased.F = true;
-        }
-        if (event.keyCode == 13) {
-            this.keyReleased.ENTER = true;
-        }
     }
 
-    eventTouchpadBtns() {
+    phoneButtons() {
         setTimeout(() => {
             document
                 .getElementById('moveleftphone')
                 .addEventListener('touchstart', (event) => {
-                    event.preventDefault();
-                    this.LEFT = true; // Updated variable name
+                    if (event.cancelable) event.preventDefault();
+                    this.LEFT = true;
                 });
     
             document
                 .getElementById('moveleftphone')
                 .addEventListener('touchend', (event) => {
-                    event.preventDefault();
-                    this.LEFT = false; // Updated variable name
+                    if (event.cancelable) event.preventDefault();
+                    this.LEFT = false;
                 });
     
             document
                 .getElementById('moverightphone')
                 .addEventListener('touchstart', (event) => {
-                    event.preventDefault();
-                    this.RIGHT = true; // Updated variable name
+                    if (event.cancelable) event.preventDefault();
+                    this.RIGHT = true;
                 });
     
             document
                 .getElementById('moverightphone')
                 .addEventListener('touchend', (event) => {
-                    event.preventDefault();
-                    this.RIGHT = false; // Updated variable name
+                    if (event.cancelable) event.preventDefault();
+                    this.RIGHT = false; 
                 });
     
             document
                 .getElementById('jumpphone')
                 .addEventListener('touchstart', (event) => {
-                    event.preventDefault();
-                    this.SPACE = true; // Updated variable name
+                    if (event.cancelable) event.preventDefault();
+                    this.SPACE = true;
                 });
     
             document
                 .getElementById('jumpphone')
                 .addEventListener('touchend', (event) => {
                     event.preventDefault();
-                    this.SPACE = false; // Updated variable name
+                    if (event.cancelable) event.preventDefault();
+                    this.SPACE = false;
                 });
     
             document
                 .getElementById('throwphone')
                 .addEventListener('touchstart', (event) => {
-                    event.preventDefault();
-                    this.F = true; // Updated variable name
+                    if (event.cancelable) event.preventDefault();;
+                    this.F = true;
                 });
     
             document
                 .getElementById('throwphone')
                 .addEventListener('touchend', (event) => {
-                    event.preventDefault();
-                    this.F = false; // Updated variable name
+                    if (event.cancelable) event.preventDefault();
+                    this.F = false;
                 });
         }, 500);
     }

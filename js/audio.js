@@ -38,6 +38,7 @@ function unmuteAudio() {
     for (const key in window.audio) {
         if (window.audio[key] instanceof Audio) {
             window.audio[key].volume = 1;
+            window.audio.bg_music.volume = 0.3;
         }
     }
     isMuted = false;
