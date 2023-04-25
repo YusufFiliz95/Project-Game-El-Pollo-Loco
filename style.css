@@ -258,6 +258,10 @@ h1 {
     z-index: 9999999999999 !important;
 }
 
+.rotate-phone p {
+    text-align: center;
+}
+
 .rotate-phone img {
     width: 20%;
 }
@@ -290,10 +294,6 @@ canvas {
     }
 
     .gameover-win {
-        width: 100%;
-    }
-
-    .buttons-in-game {
         width: 100%;
     }
 

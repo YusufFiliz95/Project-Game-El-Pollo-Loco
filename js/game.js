@@ -56,6 +56,9 @@ function toggleActionButtons() {
     if (isMobile && isLandscape) {
         actionButtons.classList.remove('d-none');
         rotatePhone.classList.add('d-none');
+    } else if (isMobile && !isLandscape) {
+        actionButtons.classList.add('d-none');
+        rotatePhone.classList.remove('d-none');
     } else if (!isMobile && window.innerWidth < 719) {
         actionButtons.classList.remove('d-none');
         rotatePhone.classList.remove('d-none');
@@ -64,6 +67,7 @@ function toggleActionButtons() {
         rotatePhone.classList.add('d-none');
     }
 }
+
 
 window.addEventListener('load', toggleActionButtons);
 window.addEventListener('resize', toggleActionButtons);
